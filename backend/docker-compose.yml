@@ -3,13 +3,13 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: salonFlow-postgres
+    container_name: salonflow-postgres
     restart: unless-stopped
 
     environment:
-      POSTGRES_DB: salonFlow
-      POSTGRES_USER: salonFlow
-      POSTGRES_PASSWORD: salonFlow
+      POSTGRES_DB: salonflow
+      POSTGRES_USER: salonflow
+      POSTGRES_PASSWORD: salonflow
 
     ports:
       - "5432:5432"
