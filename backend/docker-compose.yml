@@ -15,10 +15,10 @@ services:
       - "5432:5432"
 
     volumes:
-      - salonFlow-db:/var/lib/postgresql/data
+      - salonflow-db:/var/lib/postgresql/data
 
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U salonFlow"]
+      test: ["CMD-SHELL", "pg_isready -U salonflow"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,7 +27,7 @@ services:
       - salonflow-network
 
 volumes:
-  salonFlow-db:
+  salonflow-db:
 
 networks:
   salonflow-network:
