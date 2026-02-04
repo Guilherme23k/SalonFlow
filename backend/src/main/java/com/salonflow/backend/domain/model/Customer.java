@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -23,12 +24,14 @@ public class Customer {
     private UUID id;
 
     @NotNull
-    private String nome;
+    private String name;
 
     @NotNull
-    private String telefone;
+    private String phone;
 
-    private LocalDate created_at;
+    private LocalDateTime created_at;
+
+    private LocalDateTime updated_at;
 
 
 }
