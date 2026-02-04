@@ -17,4 +17,6 @@ public interface CustomerRepository extends JpaRepository<CustomerRepository, UU
     @Query(value = "SELECT c FROM Customer c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Customer> findByNameContainingIgnoreCase(String name);
 
+    Boolean existsByPhone(String phone);
+
 }
