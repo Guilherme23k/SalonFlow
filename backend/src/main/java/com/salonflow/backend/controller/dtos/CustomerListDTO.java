@@ -6,5 +6,5 @@ import java.util.UUID;
 public record CustomerListDTO(UUID id,
                               String name,
                               String phone,
-                              List<int> totalAgendamentos) {
+                              List<Integer> totalAgendamentos) {
 }
