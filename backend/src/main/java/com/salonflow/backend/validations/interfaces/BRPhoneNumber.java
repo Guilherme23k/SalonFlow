@@ -6,10 +6,8 @@ import jakarta.validation.constraints.Pattern;
 
 import java.lang.annotation.*;
 
-@Pattern.List({
-        @Pattern(regexp = "^\\(?[1-9]{2}\\)? ?(?:[2-8]|9[0-9])[0-9]{3}\\-?[0-9]{4}$")
-})
-@Constraint(validatedBy = {})
+
+@Constraint(validatedBy = {BrazilianPhoneValidator.class})
 @Documented
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE, ElementType.CONSTRUCTOR, ElementType.PARAMETER, ElementType.TYPE_USE})
 @Retention(RetentionPolicy.RUNTIME)
