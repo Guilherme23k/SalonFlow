@@ -10,8 +10,13 @@ public class BrazilianPhoneValidator implements ConstraintValidator<BRPhoneNumbe
 
     @Override
     public boolean isValid(String s, ConstraintValidatorContext ctx) {
-        return !(s == null | s.isBlank());
+        if (s == null || s.isBlank() || s.matches("^(1[1-9]|[2-9][0-9])$")) {
+            return false;
+        }
+
+        return true;
     }
+
 
     @Override
     public void initialize(BRPhoneNumber constraintAnnotation) {
