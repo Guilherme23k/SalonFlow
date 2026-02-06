@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.UUID;
 
-public interface CustomerRepository extends JpaRepository<CustomerRepository, UUID> {
+public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
 
     @Query(value = "SELECT c FROM Customer c WHERE c.phone = :phone")
