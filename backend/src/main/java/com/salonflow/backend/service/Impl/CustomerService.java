@@ -1,12 +1,14 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
+import com.salonflow.backend.controller.dtos.CustomerListDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -32,6 +34,12 @@ public class CustomerService {
         customer.setPhone(dto.phone());
 
         return customerRepository.save(customer);
+    }
+
+    public List<Customer> listAllCustomers(){
+
+        return customerRepository.findAll();
+
     }
 
 
