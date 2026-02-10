@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -36,9 +37,14 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public List<Customer> listAllCustomers(){
+    public List<CustomerListDTO> listAllCustomers(){
 
-        return customerRepository.findAll();
+        return customerRepository.findAll().stream()
+                .map(customer -> new CustomerListDTO(
+                        customer.getId(),
+                        customer.getName(),
+                        customer.getPhone(),
+                        Optional.empty())).collect(Collectors.toList());
 
     }
 
