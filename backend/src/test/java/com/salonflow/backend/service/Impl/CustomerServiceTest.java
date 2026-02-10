@@ -55,17 +55,23 @@ class CustomerServiceTest {
 
     }
 
-//    @Test
-//    public void shouldReturnCustomerWhenExistsInDB(){
-//
-//        Customer customerEntidade = new Customer();
-//        customerEntidade.setId(UUID.randomUUID());
-//        customerEntidade.setName(dto.name());
-//        customerEntidade.setPhone(dto.phone());
-//
-//        when(customerRepository.existsByPhone(dto.phone()))
-//
-//    }
+    @Test
+    public void shouldReturnCustomerWhenExistsInDB(){
+
+        Customer customerEntidade = new Customer();
+        customerEntidade.setId(UUID.randomUUID());
+        customerEntidade.setName(dto.name());
+        customerEntidade.setPhone(dto.phone());
+
+        when(customerRepository.findByPhone(dto.phone())).thenReturn(Optional.of(customerEntidade));
+
+        Customer results = customerService.findOrCreateByTelefone(dto);
+
+        assertNotNull(results.getId());
+        assertEquals(dto.phone(), results.getPhone());
+        verify(customerRepository, never()).save(any());
+
+    }
 
 
 
