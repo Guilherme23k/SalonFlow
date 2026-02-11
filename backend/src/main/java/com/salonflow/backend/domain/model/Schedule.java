@@ -1,11 +1,13 @@
 package com.salonflow.backend.domain.model;
 
+import com.salonflow.backend.domain.model.enums.Status;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -21,7 +23,12 @@ public class Schedule {
 
     private LocalDateTime scheduleTime;
 
-    private Boolean done;
+    @ManyToOne
+    @JoinColumn(name = "customers_id")
+    private Customer customer;
 
+    @OneToMany(mappedBy = "schedule")
+    private List<AppointmentItem> items;
 
+    private Status status;
 }
