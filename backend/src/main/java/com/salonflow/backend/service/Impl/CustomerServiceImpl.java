@@ -12,11 +12,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerService {
+public class CustomerServiceImpl {
 
     private final CustomerRepository customerRepository;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 

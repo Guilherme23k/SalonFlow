@@ -6,7 +6,7 @@ import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.repository.CustomerRepository;
 import static org.assertj.core.api.Assertions.*;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class CustomerServiceTest {
     private CustomerRepository customerRepository;
 
     @InjectMocks
-    private CustomerService customerService;
+    private CustomerServiceImpl customerService;
 
     private CustomerCreateDTO dto;
 
