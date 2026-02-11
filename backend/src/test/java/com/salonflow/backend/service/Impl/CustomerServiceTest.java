@@ -2,6 +2,7 @@ package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
 import com.salonflow.backend.controller.dtos.CustomerListDTO;
+import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.repository.CustomerRepository;
 import static org.assertj.core.api.Assertions.*;
@@ -28,6 +29,8 @@ class CustomerServiceTest {
     private CustomerService customerService;
 
     private CustomerCreateDTO dto;
+
+    private CustomerResponseDTO dto2;
 
     @BeforeEach
     public void setup(){
@@ -101,6 +104,30 @@ class CustomerServiceTest {
         assertThat(realList)
                 .usingRecursiveComparison()
                 .isEqualTo(expectedList);
+
+    }
+
+    @Test
+    public void shouldFindCustomerByPhone(){
+
+        String phone = "11938383838";
+
+        Customer customer = new Customer();
+        customer.setId(UUID.randomUUID());
+        customer.setName("Guilherme");
+        customer.setPhone(phone);
+
+
+
+        when(customerRepository.findByPhone(customer.getPhone())).thenReturn(Optional.of(customer));
+
+        dto2 = new CustomerResponseDTO(customer.getId(), customer.getName(), customer.getPhone(), customer.getCreated_at());
+
+        CustomerResponseDTO customerResults = customerService.findCustomerByPhone(phone);
+
+        assertThat(customerResults)
+                .usingRecursiveComparison()
+                .isEqualTo(dto2);
 
     }
 
