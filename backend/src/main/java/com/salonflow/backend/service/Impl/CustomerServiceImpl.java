@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomerServiceImpl {
+public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerRepository customerRepository;
 
@@ -20,6 +20,7 @@ public class CustomerServiceImpl {
         this.customerRepository = customerRepository;
     }
 
+    @Override
     public Customer findOrCreateByTelefone(CustomerCreateDTO dto){
 
 
@@ -37,6 +38,7 @@ public class CustomerServiceImpl {
         return customerRepository.save(customer);
     }
 
+    @Override
     public List<CustomerListDTO> listAllCustomers(){
 
         return customerRepository.findAll().stream()
@@ -49,6 +51,7 @@ public class CustomerServiceImpl {
     }
 
 
+    @Override
     public CustomerResponseDTO findCustomerByPhone(String phone) {
 
 
