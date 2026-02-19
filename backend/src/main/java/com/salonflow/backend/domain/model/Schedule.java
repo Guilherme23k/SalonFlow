@@ -30,5 +30,11 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule")
     private List<AppointmentItem> items;
 
+    @ManyToOne
+    private Professional professional;
+
+    @ManyToOne
+    private ProfessionalServices professionalServices;
+
     private Status status;
 }
