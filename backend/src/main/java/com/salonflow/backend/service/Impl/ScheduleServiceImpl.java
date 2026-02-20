@@ -21,6 +21,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         this.professionalRepository = professionalRepository;
     }
 
+    @Override
     public Schedule createSchedule(ScheduleCreateDTO dto) {
 
         Schedule schedule = new Schedule();
