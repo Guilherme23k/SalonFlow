@@ -3,9 +3,9 @@ package com.salonflow.backend.controller.dtos;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record ScheduleCreateDTO(CustomerCreateDTO createDTO,
-                                LocalDateTime scheduleTime,
+public record ScheduleCreateDTO(
                                 UUID customerId,
+                                LocalDateTime scheduleTime,
                                 String professionalName,
-                                String professionalService) {
+                                Long professionalService) {
 }
