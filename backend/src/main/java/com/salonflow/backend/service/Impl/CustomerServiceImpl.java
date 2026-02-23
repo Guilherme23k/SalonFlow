@@ -47,6 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
                         customer.getId(),
                         customer.getName(),
                         customer.getPhone(),
+                        customer.getCreated_at(),
                         Optional.empty())).collect(Collectors.toList());
 
     }
