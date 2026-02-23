@@ -1,7 +1,8 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.CustomerListDTO;
+import com.salonflow.backend.controller.dtos.CustomerDTO;
+import com.salonflow.backend.controller.dtos.ScheduleDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.repository.CustomerRepository;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,16 +42,20 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerListDTO> listAllCustomers(){
+    public List<CustomerDTO> listAllCustomers() {
 
         return customerRepository.findAll().stream()
-                .map(customer -> new CustomerListDTO(
+                .map(customer -> new CustomerDTO(
                         customer.getId(),
                         customer.getName(),
                         customer.getPhone(),
                         customer.getCreated_at(),
-                        Optional.empty())).collect(Collectors.toList());
-
+                        customer.getSchedules()
+                                .stream()
+                                .map(ScheduleDTO::fromEntity)
+                                .toList()
+                ))
+                .toList();
     }
 
 
@@ -64,6 +70,32 @@ public class CustomerServiceImpl implements CustomerService {
                         customer.getPhone(),
                         customer.getCreated_at()
                 )).orElseThrow(() -> new RuntimeException("Customer not found"));
+
+    }
+
+    public CustomerDTO findWithSchedules(UUID id) {
+
+        Optional<Customer> customerOptional = customerRepository.findByIDWithSchedules(id);
+
+        if (customerOptional.isEmpty()){
+            throw new RuntimeException("Customer not found");
+        }
+
+        Customer customer = customerOptional.get();
+
+        List<ScheduleDTO> scheduleDTOs = customer.getSchedules()
+                .stream()
+                .map(ScheduleDTO::fromEntity)
+                .toList();
+
+        return new CustomerDTO(
+                customer.getId(),
+                customer.getName(),
+                customer.getPhone(),
+                customer.getCreated_at(),
+                scheduleDTOs
+        );
+
 
     }
 }
