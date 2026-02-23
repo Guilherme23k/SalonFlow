@@ -1,7 +1,7 @@
 package com.salonflow.backend.service;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.CustomerListDTO;
+import com.salonflow.backend.controller.dtos.CustomerDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 
@@ -11,7 +11,7 @@ public interface CustomerService {
 
     Customer findOrCreateByTelefone(CustomerCreateDTO dto);
 
-    List<CustomerListDTO> listAllCustomers();
+    List<CustomerDTO> listAllCustomers();
 
     CustomerResponseDTO findCustomerByPhone(String phone);
 }
