@@ -1,7 +1,7 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.ScheduleCreateDTO;
+import com.salonflow.backend.controller.dtos.ScheduleDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.model.ProfessionalServices;
@@ -9,7 +9,6 @@ import com.salonflow.backend.domain.model.Schedule;
 import com.salonflow.backend.domain.repository.CustomerRepository;
 import com.salonflow.backend.domain.repository.ProfessionalRepository;
 import com.salonflow.backend.domain.repository.ScheduleRepository;
-import com.salonflow.backend.service.ScheduleService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +38,7 @@ class ScheduleServiceImplTest {
     @InjectMocks
     private ScheduleServiceImpl scheduleService;
 
-    private ScheduleCreateDTO scheduleCreateDTO;
+    private ScheduleDTO scheduleDTO;
 
     private CustomerCreateDTO customerDTO;
 
@@ -79,24 +78,25 @@ class ScheduleServiceImplTest {
         customerFake.setName(customerDTO.name());
         customerFake.setPhone(customerDTO.phone());
 
-        scheduleCreateDTO = new ScheduleCreateDTO(
+        scheduleDTO = new ScheduleDTO(
                 customerFake.getId(),
                 LocalDateTime.now().plusDays(1),
                 professional.getName(),
-                corte.getId()
+                corte.getName(),
+                corte.getPrice()
 
         );
 
 
-        when(customerRepository.findById(scheduleCreateDTO.customerId())).
+        when(customerRepository.findById(scheduleDTO.customerId())).
                 thenReturn(java.util.Optional.of(customerFake));
 
-        when(professionalRepository.findByName(scheduleCreateDTO.professionalName()))
+        when(professionalRepository.findByName(scheduleDTO.professionalName()))
                 .thenReturn(java.util.Optional.of(professional));
 
         when(scheduleRepository.save(any(Schedule.class))).thenAnswer(i -> i.getArguments()[0]);
 
-        Schedule scheduleResults = scheduleService.createSchedule(scheduleCreateDTO);
+        Schedule scheduleResults = scheduleService.createSchedule(scheduleDTO);
 
         assertNotNull(scheduleResults);
         assertEquals(customerFake.getName(), scheduleResults.getCustomer().getName());
