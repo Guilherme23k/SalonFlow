@@ -1,6 +1,6 @@
 package com.salonflow.backend.service.Impl;
 
-import com.salonflow.backend.controller.dtos.ScheduleCreateDTO;
+import com.salonflow.backend.controller.dtos.ScheduleDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.model.Schedule;
@@ -27,7 +27,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule createSchedule(ScheduleCreateDTO dto) {
+    public Schedule createSchedule(ScheduleDTO dto) {
 
         Customer customer = customerRepository.findById(dto.customerId())
                 .orElseThrow(() -> new RuntimeException("Customer not found"));
