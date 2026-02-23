@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -73,6 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     }
 
+    @Override
     public CustomerDTO findWithSchedules(UUID id) {
 
         Optional<Customer> customerOptional = customerRepository.findByIDWithSchedules(id);

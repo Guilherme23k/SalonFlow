@@ -6,6 +6,7 @@ import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CustomerService {
 
@@ -14,4 +15,6 @@ public interface CustomerService {
     List<CustomerDTO> listAllCustomers();
 
     CustomerResponseDTO findCustomerByPhone(String phone);
+
+    CustomerDTO findWithSchedules(UUID id);
 }
