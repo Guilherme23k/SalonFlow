@@ -20,4 +20,6 @@ public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 
     Boolean existsByPhone(String phone);
 
+    @Query(value = "SELECT c FROM Customer c LEFT JOIN FETCH c.schedules WHERE c.id = :id")
+    Optional<Customer> findSchedulesByCustomerId(@Param("id") UUID id);
 }
