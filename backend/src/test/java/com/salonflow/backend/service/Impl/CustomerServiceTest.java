@@ -1,9 +1,13 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.CustomerListDTO;
+import com.salonflow.backend.controller.dtos.CustomerDTO;
+import com.salonflow.backend.controller.dtos.ScheduleDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
+import com.salonflow.backend.domain.model.Professional;
+import com.salonflow.backend.domain.model.ProfessionalServices;
+import com.salonflow.backend.domain.model.Schedule;
 import com.salonflow.backend.domain.repository.CustomerRepository;
 import static org.assertj.core.api.Assertions.*;
 
@@ -14,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +33,10 @@ class CustomerServiceTest {
     @InjectMocks
     private CustomerServiceImpl customerService;
 
+    private Professional professional;
+
+    private ProfessionalServices corte;
+
     private CustomerCreateDTO dto;
 
     private CustomerResponseDTO dto2;
@@ -36,6 +45,19 @@ class CustomerServiceTest {
     public void setup(){
 
         dto = new CustomerCreateDTO("Guilherme", "11981131645");
+
+        professional = new Professional();
+        professional.setId(UUID.randomUUID());
+        professional.setName("Patricia");
+        professional.setServices(new ArrayList<>());
+
+        corte =  new ProfessionalServices();
+        corte.setId(1L);
+        corte.setName("Corte degrade");
+        corte.setProfessional(professional);
+        corte.setPrice(50.00);
+
+        professional.getServices().add(corte);
     }
 
     @Test
@@ -85,21 +107,33 @@ class CustomerServiceTest {
         id1Customer.setId(UUID.randomUUID());
         id1Customer.setName("Guigas");
         id1Customer.setPhone("11902939485");
+        id1Customer.setSchedules(new ArrayList<>());
 
         Customer id2Customer = new Customer();
         id2Customer.setId(UUID.randomUUID());
         id2Customer.setName("Guigas");
         id2Customer.setPhone("11902939485");
+        id2Customer.setSchedules(new ArrayList<>());
+
+        List<ScheduleDTO> scheduleDTOS1 = id1Customer.getSchedules()
+                        .stream()
+                                .map(ScheduleDTO::fromEntity)
+                                        .toList();
+
+        List<ScheduleDTO> scheduleDTOS2 = id2Customer.getSchedules()
+                        .stream()
+                                .map(ScheduleDTO::fromEntity)
+                                        .toList();
 
 
         when(customerRepository.findAll()).thenReturn(List.of(id1Customer, id2Customer));
 
-        CustomerListDTO customerListDTO1 = new CustomerListDTO(id1Customer.getId(), id1Customer.getName(), id1Customer.getPhone(), Optional.empty());
-        CustomerListDTO customerListDTO2 = new CustomerListDTO(id2Customer.getId(), id2Customer.getName(), id2Customer.getPhone(), Optional.empty());
+        CustomerDTO customerDTO1 = new CustomerDTO(id1Customer.getId(), id1Customer.getName(), id1Customer.getPhone(), id1Customer.getCreated_at(), scheduleDTOS1);
+        CustomerDTO customerDTO2 = new CustomerDTO(id2Customer.getId(), id2Customer.getName(), id2Customer.getPhone(), id2Customer.getCreated_at(), scheduleDTOS2);
 
-        List<CustomerListDTO> expectedList = List.of(customerListDTO1, customerListDTO2);
+        List<CustomerDTO> expectedList = List.of(customerDTO1, customerDTO2);
 
-        List<CustomerListDTO> realList = customerService.listAllCustomers();
+        List<CustomerDTO> realList = customerService.listAllCustomers();
 
         assertThat(realList)
                 .usingRecursiveComparison()
@@ -131,6 +165,46 @@ class CustomerServiceTest {
 
     }
 
+
+    @Test
+    public void shouldFindAllSchedulesByCustomerId(){
+
+        UUID customerID = UUID.randomUUID();
+
+        Customer customer = new Customer();
+        customer.setId(customerID);
+        customer.setName("Guilherme");
+        customer.setSchedules(new ArrayList<>());
+
+        Schedule schedule1 = new Schedule();
+        schedule1.setCustomer(customer);
+        schedule1.setScheduleTime(LocalDateTime.now());
+        schedule1.setProfessional(professional);
+        schedule1.setProfessionalServices(corte);
+
+
+
+        Schedule schedule2 = new Schedule();
+        schedule2.setCustomer(customer);
+        schedule2.setScheduleTime(LocalDateTime.now().plusDays(1));
+        schedule2.setProfessional(professional);
+        schedule2.setProfessionalServices(corte);
+
+        List<Schedule> schedules = List.of(schedule1, schedule2);
+
+        customer.setSchedules(schedules);
+
+
+        when(customerRepository.findByIDWithSchedules(customer.getId())).thenReturn(Optional.of(customer));
+
+        CustomerDTO result = customerService.findWithSchedules(customerID);
+
+        assertNotNull(result);
+        assertEquals("Guilherme", result.name());
+        assertFalse(result.schedules().isEmpty());
+        assertEquals(2, result.schedules().size());
+
+    }
 
 
 }
