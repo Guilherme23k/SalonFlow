@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface CustomerService {
 
-    Customer findOrCreateByTelefone(CustomerCreateDTO dto);
+    CustomerDTO findOrCreateByTelefone(CustomerCreateDTO dto);
 
     List<CustomerDTO> listAllCustomers();
 
