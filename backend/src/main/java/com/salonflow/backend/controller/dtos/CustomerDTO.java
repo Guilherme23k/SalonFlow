@@ -18,7 +18,16 @@ public record CustomerDTO(UUID id,
                 customer.getName(),
                 customer.getPhone(),
                 customer.getCreated_at(),
-                customer.getSchedules()
+                customer.getSchedules() != null ?
+                        customer.getSchedules().stream()
+                                .map(s -> new ScheduleDTO(
+                                        s.getId(),
+                                        s.getScheduleTime(),
+                                        s.getProfessional().getName(),
+                                        s.getProfessionalServices().getName(),
+                                        s.getProfessionalServices().getPrice()
+                                ))
+                                .toList() : null
         );
     }
 }
