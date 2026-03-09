@@ -1,7 +1,6 @@
 package com.salonflow.backend.controller.dtos;
 
 import com.salonflow.backend.domain.model.Customer;
-import com.salonflow.backend.domain.model.Schedule;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -11,7 +10,7 @@ public record CustomerDTO(UUID id,
                           String name,
                           String phone,
                           LocalDateTime createdAt,
-                          List<Schedule> schedules) {
+                          List<ScheduleDTO> schedules) {
 
     public static CustomerDTO toDTO(Customer customer){
         return new CustomerDTO(
