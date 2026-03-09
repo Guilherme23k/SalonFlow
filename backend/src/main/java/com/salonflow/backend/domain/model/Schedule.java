@@ -36,5 +36,6 @@ public class Schedule {
     @ManyToOne
     private ProfessionalServices professionalServices;
 
+    @Enumerated(EnumType.STRING)
     private Status status;
 }
