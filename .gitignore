@@ -1,10 +1,83 @@
-# Docker
+# ==============================================================================
+# SALONFLOW - GLOBAL GITIGNORE (Backend & Frontend)
+# ==============================================================================
+
+# --- DOCKER & AMBIENTE ---
 *.env
 docker-compose.override.yml
 
-# OS
+# --- SISTEMA OPERACIONAL ---
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Logs
+# --- LOGS E TEMPORÁRIOS ---
 *.log
+.logs/
+*.swp
+*.bak
+*.tmp
+*.history/
+
+# --- BACKEND (Java / Spring / Maven / Gradle) ---
+**/target/
+**/target/**
+**/build/
+**/out/
+**/bin/
+!.mvn/wrapper/maven-wrapper.jar
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+# Maven Release/Backup
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+HELP.md
+
+# --- FRONTEND (Node / Angular) ---
+**/node_modules/
+**/.angular/
+**/dist/
+**/tmp/
+**/out-tsc/
+**/bazel-out/
+**/coverage/
+.sass-cache/
+/connect.lock
+/libpeerconnection.log
+testem.log
+/typings
+__screenshots__/
+npm-debug.log
+yarn-error.log
+
+# --- IDEs (VS Code, IntelliJ, Eclipse, NetBeans) ---
+.idea/
+*.iws
+*.iml
+*.ipr
+.project
+.classpath
+.settings/
+.factorypath
+.apt_generated
+.springBeans
+.sts4-cache
+.c9/
+*.launch
+*.sublime-workspace
+.nb-gradle/
+/nbproject/private/
+/nbbuild/
+/nbdist/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

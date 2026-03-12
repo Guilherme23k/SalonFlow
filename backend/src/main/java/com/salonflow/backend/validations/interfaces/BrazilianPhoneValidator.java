@@ -8,13 +8,16 @@ import java.lang.annotation.Annotation;
 
 public class BrazilianPhoneValidator implements ConstraintValidator<BRPhoneNumber, String> {
 
+    private static final String PHONE_REGEX = "^\\d{2}9\\d{8}$";
+
     @Override
-    public boolean isValid(String s, ConstraintValidatorContext ctx) {
-        if (s == null || s.isBlank() || s.matches("^(1[1-9]|[2-9][0-9])$")) {
+    public boolean isValid(String value, ConstraintValidatorContext ctx) {
+
+        if (value == null) {
             return false;
         }
 
-        return true;
+        return value.matches(PHONE_REGEX);
     }
 
 

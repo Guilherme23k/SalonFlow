@@ -1,8 +1,10 @@
 package com.salonflow.backend.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "professional_services")
 public class ProfessionalServices {
 
