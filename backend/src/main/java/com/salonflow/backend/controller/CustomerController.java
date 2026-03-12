@@ -24,14 +24,12 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> findOrCreateCustomerByPhone(@RequestBody @Valid CustomerCreateDTO dto){
+    public ResponseEntity<CustomerResponseDTO> findOrCreateCustomerByPhone(@RequestBody @Valid CustomerCreateDTO dto){
 
 
-        CustomerDTO customerDTO = customerService.findOrCreateByTelefone(dto);
-
-
-        return ResponseEntity.ok().body(customerDTO);
-
+        return ResponseEntity.ok(
+                CustomerResponseDTO.toDTO(customerService.findOrCreateByPhone(dto))
+        );
 
     }
 
