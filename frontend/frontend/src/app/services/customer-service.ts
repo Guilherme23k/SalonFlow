@@ -16,6 +16,12 @@ export class CustomerService {
     return this.http.get<Customer>(this.apiUrl + `${phone}`);
   }
 
+  findOrCreate(customer : customerCreate): Observable<Customer> {
+    
+    return this.http.post<Customer>(this.apiUrl, customer);
+
+  }
+
 
   
 }
