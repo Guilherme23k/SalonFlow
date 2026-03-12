@@ -4,6 +4,7 @@ import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
 import com.salonflow.backend.controller.dtos.CustomerDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<CustomerDTO> findOrCreateCustomerByPhone(@RequestBody CustomerCreateDTO dto){
+    public ResponseEntity<CustomerDTO> findOrCreateCustomerByPhone(@RequestBody @Valid CustomerCreateDTO dto){
 
 
         CustomerDTO customerDTO = customerService.findOrCreateByTelefone(dto);
