@@ -74,7 +74,7 @@ class CustomerServiceTest {
 
 
 
-        CustomerDTO results = customerService.findOrCreateByTelefone(dto);
+        CustomerDTO results = CustomerDTO.toDTO(customerService.findOrCreateByPhone(dto));
 
         assertNotNull(results.id());
         assertEquals(dto.name(), results.name());
@@ -92,7 +92,7 @@ class CustomerServiceTest {
 
         when(customerRepository.findByPhone(dto.phone())).thenReturn(Optional.of(customerEntidade));
 
-        CustomerDTO results = customerService.findOrCreateByTelefone(dto);
+        CustomerDTO results = CustomerDTO.toDTO(customerService.findOrCreateByPhone(dto));
 
         assertNotNull(results.id());
         assertEquals(dto.phone(), results.phone());
