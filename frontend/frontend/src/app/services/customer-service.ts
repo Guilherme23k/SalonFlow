@@ -21,7 +21,5 @@ export class CustomerService {
     return this.http.post<Customer>(this.apiUrl, customer);
 
   }
-
-
   
 }
