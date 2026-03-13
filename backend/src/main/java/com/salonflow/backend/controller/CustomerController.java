@@ -1,7 +1,6 @@
 package com.salonflow.backend.controller;
 
-import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.CustomerDTO;
+import com.salonflow.backend.controller.dtos.customer.CustomerCreateDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.service.CustomerService;
 import io.swagger.v3.oas.annotations.Operation;

@@ -1,8 +1,8 @@
 package com.salonflow.backend.service.Impl;
 
-import com.salonflow.backend.controller.dtos.CustomerCreateDTO;
-import com.salonflow.backend.controller.dtos.CustomerDTO;
-import com.salonflow.backend.controller.dtos.ScheduleDTO;
+import com.salonflow.backend.controller.dtos.customer.CustomerCreateDTO;
+import com.salonflow.backend.controller.dtos.customer.CustomerDTO;
+import com.salonflow.backend.controller.dtos.schedule.ScheduleDTO;
 import com.salonflow.backend.controller.dtos.response.CustomerResponseDTO;
 import com.salonflow.backend.domain.model.Customer;
 import com.salonflow.backend.domain.model.Professional;
