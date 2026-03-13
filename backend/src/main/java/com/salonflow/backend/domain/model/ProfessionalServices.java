@@ -16,7 +16,5 @@ public class ProfessionalServices {
 
     private Double price;
 
-    @ManyToOne
-    private Professional professional;
 
 }
