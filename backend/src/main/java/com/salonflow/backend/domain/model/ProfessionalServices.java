@@ -16,5 +16,8 @@ public class ProfessionalServices {
 
     private Double price;
 
+    @ManyToOne
+    @JoinColumn(name = "professional_id")
+    private Professional professional_id;
 
 }
