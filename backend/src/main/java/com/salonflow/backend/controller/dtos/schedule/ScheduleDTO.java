@@ -1,4 +1,4 @@
-package com.salonflow.backend.controller.dtos;
+package com.salonflow.backend.controller.dtos.schedule;
 
 import com.salonflow.backend.domain.model.Schedule;
 

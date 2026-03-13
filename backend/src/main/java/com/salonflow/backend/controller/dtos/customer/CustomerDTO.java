@@ -1,5 +1,6 @@
-package com.salonflow.backend.controller.dtos;
+package com.salonflow.backend.controller.dtos.customer;
 
+import com.salonflow.backend.controller.dtos.schedule.ScheduleDTO;
 import com.salonflow.backend.domain.model.Customer;
 
 import java.time.LocalDateTime;

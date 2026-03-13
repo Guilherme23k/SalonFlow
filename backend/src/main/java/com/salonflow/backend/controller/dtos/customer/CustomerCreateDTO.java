@@ -1,4 +1,4 @@
-package com.salonflow.backend.controller.dtos;
+package com.salonflow.backend.controller.dtos.customer;
 
 import com.salonflow.backend.validations.interfaces.BRPhoneNumber;
 import io.swagger.v3.oas.annotations.media.Schema;
