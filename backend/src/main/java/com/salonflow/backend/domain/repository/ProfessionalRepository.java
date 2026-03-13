@@ -5,12 +5,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 public interface ProfessionalRepository extends JpaRepository<Professional, UUID> {
 
-    @Query(value = "SELECT n FROM Professional n WHERE n.name = :name")
+    @Query(value = "SELECT n FROM Professional n WHERE UPPER(n.name) = UPPER(:name)")
     Optional<Professional> findByName(@Param("name") String name);
 
 }
