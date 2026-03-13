@@ -54,7 +54,7 @@ class CustomerServiceTest {
         corte =  new ProfessionalServices();
         corte.setId(1L);
         corte.setName("Corte degrade");
-        corte.setProfessional(professional);
+        corte.setProfessional_id(professional);
         corte.setPrice(50.00);
 
         professional.getServices().add(corte);
