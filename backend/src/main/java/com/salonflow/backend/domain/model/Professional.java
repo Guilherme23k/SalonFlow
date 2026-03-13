@@ -1,5 +1,6 @@
 package com.salonflow.backend.domain.model;
 
+import com.salonflow.backend.validations.interfaces.BRPhoneNumber;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +24,12 @@ public class Professional {
 
     @ManyToMany
     private List<ProfessionalServices> services;
+
+    private Double commissionPercentage;
+
+    @BRPhoneNumber
+    private String phone;
+
+    private Boolean active;
 
 }
