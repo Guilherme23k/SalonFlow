@@ -35,14 +35,19 @@ class ProfessionalServiceImplTest {
 
         Professional professional = new Professional();
         professional.setId(UUID.randomUUID());
-        professional.setName("Patricia");
-        professional.setPhone("11947584930");
+        professional.setName(dto.name());
+        professional.setPhone(dto.phone());
         professional.setServices(new ArrayList<>());
-        professional.setCommissionPercentage(10.0);
+        professional.setCommissionPercentage(dto.commisionPercentage());
 
         when(professionalRepository.save(any(Professional.class))).thenReturn(professional);
 
         ProfessionalCreateDTO results = ProfessionalCreateDTO.toDTO(professionalService.create(dto));
+
+        assertNotNull(results);
+        assertEquals(professional.getName(), results.name());
+        assertEquals(professional.getPhone(), results.phone());
+        assertEquals(professional.getCommissionPercentage(), results.commisionPercentage());
 
 
 
