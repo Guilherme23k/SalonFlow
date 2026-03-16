@@ -1,9 +1,11 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.professional.ProfessionalCreateDTO;
+import com.salonflow.backend.controller.dtos.response.ProfessionalResponseDTO;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.repository.ProfessionalRepository;
 import com.salonflow.backend.service.ProfessionalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,17 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         this.professionalRepository = professionalRepository;
     }
 
-    public Professional create(ProfessionalCreateDTO dto) {
+    public ProfessionalResponseDTO create(@Valid ProfessionalCreateDTO dto) {
+
 
         Professional professional = new Professional();
-        BeanUtils.copyProperties(dto,professional);
-        return professionalRepository.save(professional);
+        professional.setName(dto.name());
+        professional.setPhone(dto.phone());
+        professional.setCommissionPercentage(dto.commisionPercentage());
+
+        Professional savedProfessional = professionalRepository.save(professional);
+        return ProfessionalResponseDTO.toResponseDTO(savedProfessional);
+
 
     }
 }
