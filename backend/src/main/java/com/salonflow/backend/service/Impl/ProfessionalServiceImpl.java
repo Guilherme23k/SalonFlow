@@ -4,6 +4,7 @@ import com.salonflow.backend.controller.dtos.professional.ProfessionalCreateDTO;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.repository.ProfessionalRepository;
 import com.salonflow.backend.service.ProfessionalService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,14 +19,7 @@ public class ProfessionalServiceImpl implements ProfessionalService {
     public Professional create(ProfessionalCreateDTO dto) {
 
         Professional professional = new Professional();
-        professional.setName(dto.name());
-        professional.setPhone(dto.phone());
-        professional.setCommissionPercentage(dto.commisionPercentage());
-
-        if (dto.name().isEmpty() || dto.phone().isEmpty() || dto.commisionPercentage().isNaN()){
-            throw new RuntimeException("An argument not found");
-        }
-
+        BeanUtils.copyProperties(dto,professional);
         return professionalRepository.save(professional);
 
     }
