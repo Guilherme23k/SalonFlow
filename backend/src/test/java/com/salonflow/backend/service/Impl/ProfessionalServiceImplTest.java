@@ -48,9 +48,6 @@ class ProfessionalServiceImplTest {
         assertEquals(professional.getName(), results.name());
         assertEquals(professional.getPhone(), results.phone());
         assertEquals(professional.getCommissionPercentage(), results.commisionPercentage());
-
-
-
     }
 
 }

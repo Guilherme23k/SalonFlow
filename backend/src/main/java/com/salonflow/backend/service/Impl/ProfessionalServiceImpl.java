@@ -22,6 +22,10 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         professional.setPhone(dto.phone());
         professional.setCommissionPercentage(dto.commisionPercentage());
 
+        if (dto.name().isEmpty() || dto.phone().isEmpty() || dto.commisionPercentage().isNaN()){
+            throw new RuntimeException("An argument not found");
+        }
+
         return professionalRepository.save(professional);
 
     }
