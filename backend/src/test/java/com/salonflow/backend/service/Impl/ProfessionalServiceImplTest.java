@@ -1,6 +1,7 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.professional.ProfessionalCreateDTO;
+import com.salonflow.backend.controller.dtos.response.ProfessionalResponseDTO;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.repository.ProfessionalRepository;
 import org.junit.jupiter.api.Assertions;
@@ -42,12 +43,33 @@ class ProfessionalServiceImplTest {
 
         when(professionalRepository.save(any(Professional.class))).thenReturn(professional);
 
-        ProfessionalCreateDTO results = ProfessionalCreateDTO.toDTO(professionalService.create(dto));
+        ProfessionalResponseDTO results =professionalService.create(dto);
+
 
         assertNotNull(results);
         assertEquals(professional.getName(), results.name());
         assertEquals(professional.getPhone(), results.phone());
-        assertEquals(professional.getCommissionPercentage(), results.commisionPercentage());
+    }
+
+    @Test
+    public void shouldCreateProfessionalWithCommission(){
+
+        ProfessionalCreateDTO dto = new ProfessionalCreateDTO("Patricia", "11914521452", 10.0);
+
+        Professional professional = new Professional();
+        professional.setName(dto.name());
+        professional.setPhone(dto.phone());
+        professional.setCommissionPercentage(dto.commisionPercentage());
+
+        when(professionalRepository.save(any(Professional.class))).thenReturn(professional);
+
+        professionalService.create(dto);
+
+        verify(professionalRepository).save(argThat(p ->
+                Double.valueOf(10.0).equals(p.getCommissionPercentage()) &&
+                p.getName().equals("Patricia")
+        ));
+
     }
 
 }
