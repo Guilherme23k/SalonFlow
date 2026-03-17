@@ -17,12 +17,5 @@ public record CustomerResponseDTO(
                 customer.getPhone()
         );
     }
-
-    public static CustomerResponseDTO fromCreateToResponse(CustomerCreateDTO createDTO){
-        return new CustomerResponseDTO(
-                createDTO.name(),
-                createDTO.phone()
-        );
-    }
 }
 

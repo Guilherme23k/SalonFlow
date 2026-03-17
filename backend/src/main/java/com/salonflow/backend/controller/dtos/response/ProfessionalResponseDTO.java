@@ -17,11 +17,4 @@ public record ProfessionalResponseDTO(
                 professional.getPhone()
         );
     }
-
-    public static ProfessionalResponseDTO fromCreateToResponse(ProfessionalCreateDTO professionalCreateDTO){
-        return new ProfessionalResponseDTO(
-                professionalCreateDTO.name(),
-                professionalCreateDTO.phone()
-        );
-    }
 }
