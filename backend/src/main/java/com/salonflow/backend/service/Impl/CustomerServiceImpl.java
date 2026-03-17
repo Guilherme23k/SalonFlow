@@ -58,12 +58,10 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponseDTO findCustomerByPhone(String phone) {
 
 
-        return customerRepository.findByPhone(phone)
+         return customerRepository.findByPhone(phone)
                 .map(customer -> new CustomerResponseDTO(
-                        customer.getId(),
                         customer.getName(),
-                        customer.getPhone(),
-                        customer.getCreated_at()
+                        customer.getPhone()
                 )).orElseThrow(() -> new RuntimeException("Customer not found"));
 
     }
