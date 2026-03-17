@@ -31,7 +31,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerResponseDTO> findOrCreateCustomerByPhone(@RequestBody @Valid CustomerCreateDTO dto){
 
-        CustomerResponseDTO responseDTO = CustomerResponseDTO.fromCreateToResponse(dto);
+        CustomerResponseDTO responseDTO = customerService.findOrCreateByPhone(dto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 
