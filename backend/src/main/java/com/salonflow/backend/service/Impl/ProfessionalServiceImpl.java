@@ -18,8 +18,8 @@ public class ProfessionalServiceImpl implements ProfessionalService {
         this.professionalRepository = professionalRepository;
     }
 
+    @Override
     public ProfessionalResponseDTO create(@Valid ProfessionalCreateDTO dto) {
-
 
         Professional professional = new Professional();
         professional.setName(dto.name());
