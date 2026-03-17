@@ -23,15 +23,17 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer findOrCreateByPhone(CustomerCreateDTO dto){
+    public CustomerResponseDTO findOrCreateByPhone(CustomerCreateDTO dto){
 
-        return customerRepository.findByPhone(dto.phone())
+        Customer customer = customerRepository.findByPhone(dto.phone())
                 .orElseGet(() -> {
-                    Customer customer = new Customer();
-                    customer.setName(dto.name());
-                    customer.setPhone(dto.phone());
-                    return customerRepository.save(customer);
+                    Customer newCustomer = new Customer();
+                    newCustomer.setName(dto.name());
+                    newCustomer.setPhone(dto.phone());
+                    return customerRepository.save(newCustomer);
                 });
+
+        return CustomerResponseDTO.toDTO(customer);
     }
 
     @Override
