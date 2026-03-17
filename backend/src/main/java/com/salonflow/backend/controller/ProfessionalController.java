@@ -25,7 +25,7 @@ public class ProfessionalController {
     @PostMapping
     public ResponseEntity<ProfessionalResponseDTO> createProfessional(@RequestBody @Valid ProfessionalCreateDTO dto){
 
-        ProfessionalResponseDTO responseDTO = ProfessionalResponseDTO.fromCreateToResponse(dto);
+        ProfessionalResponseDTO responseDTO = professionalService.create(dto);;
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
 
     }
