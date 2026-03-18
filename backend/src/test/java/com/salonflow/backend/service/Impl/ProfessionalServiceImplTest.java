@@ -72,4 +72,11 @@ class ProfessionalServiceImplTest {
 
     }
 
+    @Test
+    public void shouldEditProfessional(){
+
+
+
+    }
+
 }
