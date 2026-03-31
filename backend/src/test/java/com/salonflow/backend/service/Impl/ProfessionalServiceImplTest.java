@@ -15,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,9 +84,21 @@ class ProfessionalServiceImplTest {
         professional.setServices(new ArrayList<>());
         professional.setCommissionPercentage(10.0);
 
-        when(professionalRepository.findByName("Patricia")).thenReturn(any(Professional.class));
+        ProfessionalDTO dto = new ProfessionalDTO("Nome novo", "11948514632");
 
-        professionalService.edit(ProfessionalDTO dto);
+        when(professionalRepository.findByName("Patricia")).thenReturn(Optional.ofNullable(any(Professional.class)));
+        when(professionalRepository.save(any(Professional.class))).thenAnswer(i -> i.getArguments()[0]);
+
+
+        ProfessionalResponseDTO results = professionalService.edit(dto);
+
+        verify(professionalRepository).save(argThat(p ->
+                p.getName().equals("Nome novo") &&
+                        p.getPhone().equals("11948514632")
+        ));
+
+        assertNotNull(results);
+        assertEquals("Nome novo", results.name());
 
 
     }
