@@ -1,6 +1,7 @@
 package com.salonflow.backend.service.Impl;
 
 import com.salonflow.backend.controller.dtos.professional.ProfessionalCreateDTO;
+import com.salonflow.backend.controller.dtos.professional.ProfessionalDTO;
 import com.salonflow.backend.controller.dtos.response.ProfessionalResponseDTO;
 import com.salonflow.backend.domain.model.Professional;
 import com.salonflow.backend.domain.repository.ProfessionalRepository;
@@ -75,6 +76,16 @@ class ProfessionalServiceImplTest {
     @Test
     public void shouldEditProfessional(){
 
+        Professional professional = new Professional();
+        professional.setId(UUID.randomUUID());
+        professional.setName("Patricia");
+        professional.setPhone("11945214521");
+        professional.setServices(new ArrayList<>());
+        professional.setCommissionPercentage(10.0);
+
+        when(professionalRepository.findByName("Patricia")).thenReturn(any(Professional.class));
+
+        professionalService.edit(ProfessionalDTO dto);
 
 
     }
