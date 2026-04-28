@@ -48,7 +48,7 @@ public class TenantService {
     @Transactional(readOnly = true)
     public TenantResponse findBySlug(String slug){
         return repository.findBySlug(slug)
-                .map(TenantResponse::from)(
+                .map(TenantResponse::from)
                 .orElseThrow(() -> new BusinessException(
                         "Tenant not found",
                         HttpStatus.NOT_FOUND
