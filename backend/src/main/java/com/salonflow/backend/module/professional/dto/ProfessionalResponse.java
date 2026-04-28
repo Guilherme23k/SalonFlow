@@ -13,7 +13,7 @@ public record ProfessionalResponse(
         Boolean active
 ) {
 
-    public ProfessionalResponse from (Professional professional){
+    public static ProfessionalResponse from (Professional professional){
         return new ProfessionalResponse(
                 professional.getId(),
                 professional.getName(),
