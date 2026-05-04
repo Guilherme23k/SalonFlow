@@ -1,6 +1,6 @@
-package com.salonflow.backend.module.serviceDuration.dto;
+package com.salonflow.backend.module.serviceduration.dto;
 
-import com.salonflow.backend.module.serviceDuration.ServiceDuration;
+import com.salonflow.backend.module.serviceduration.ServiceDuration;
 
 import java.math.BigDecimal;
 import java.util.UUID;

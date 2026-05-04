@@ -1,4 +1,4 @@
-package com.salonflow.backend.module.serviceDuration.dto;
+package com.salonflow.backend.module.serviceduration.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

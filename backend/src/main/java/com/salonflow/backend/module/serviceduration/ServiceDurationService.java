@@ -1,12 +1,12 @@
-package com.salonflow.backend.module.serviceDuration;
+package com.salonflow.backend.module.serviceduration;
 
 import com.salonflow.backend.infra.TenantContext;
 import com.salonflow.backend.infra.exception.BusinessException;
 import com.salonflow.backend.module.professional.Professional;
 import com.salonflow.backend.module.professional.ProfessionalRepository;
 import com.salonflow.backend.module.service.ServiceRepository;
-import com.salonflow.backend.module.serviceDuration.dto.ServiceDurationRequest;
-import com.salonflow.backend.module.serviceDuration.dto.ServiceDurationResponse;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationRequest;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

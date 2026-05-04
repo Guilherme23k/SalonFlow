@@ -1,4 +1,4 @@
-package com.salonflow.backend.module.serviceDuration;
+package com.salonflow.backend.module.serviceduration;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

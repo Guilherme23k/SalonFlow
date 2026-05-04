@@ -1,7 +1,7 @@
-package com.salonflow.backend.module.serviceDuration;
+package com.salonflow.backend.module.serviceduration;
 
-import com.salonflow.backend.module.serviceDuration.dto.ServiceDurationRequest;
-import com.salonflow.backend.module.serviceDuration.dto.ServiceDurationResponse;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationRequest;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

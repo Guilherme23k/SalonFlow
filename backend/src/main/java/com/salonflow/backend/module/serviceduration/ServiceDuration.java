@@ -1,4 +1,4 @@
-package com.salonflow.backend.module.serviceDuration;
+package com.salonflow.backend.module.serviceduration;
 
 
 import com.salonflow.backend.module.professional.Professional;
