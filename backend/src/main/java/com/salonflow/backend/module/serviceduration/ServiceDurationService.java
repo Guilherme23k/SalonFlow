@@ -28,15 +28,6 @@ public class ServiceDurationService {
 
         UUID tenantId = TenantContext.getCurrentTenant();
 
-        if (serviceDurationRepository.existsByProfessionalIdAndServiceId(
-                request.professionalId(), request.serviceId())) {
-                    throw new BusinessException(
-                            "This professional already have a duration registered for this service",
-                            HttpStatus.CONFLICT
-                    );
-
-                }
-
 
         Professional professional = professionalRepository
                 .findByIdAndTenantId(request.professionalId(), tenantId)
@@ -51,6 +42,15 @@ public class ServiceDurationService {
                         "Serviço not found",
                         HttpStatus.NOT_FOUND
                 ));
+
+        if (serviceDurationRepository.existsByProfessionalAndService(
+                professional, service
+        )){
+            throw new BusinessException(
+                    "This Professional already have a duration registered for this Service",
+                    HttpStatus.CONFLICT
+            );
+        }
 
         ServiceDuration sd = ServiceDuration.builder()
                 .professional(professional)
