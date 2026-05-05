@@ -145,7 +145,7 @@ public class AppointmentService {
     @Transactional(readOnly = true)
     public List<AppointmentResponse> findByProfessional(UUID professionalId) {
         return appointmentRepository
-                .findAllByProfessionalIdAndTenantIdOrderByScheduleAtAsc(
+                .findAllByProfessionalIdAndTenantIdOrderByScheduledAtAsc(
                         professionalId, TenantContext.getCurrentTenant())
                 .stream()
                 .map(AppointmentResponse::from)
