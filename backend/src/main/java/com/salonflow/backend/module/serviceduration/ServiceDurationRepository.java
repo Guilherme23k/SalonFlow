@@ -1,6 +1,8 @@
 package com.salonflow.backend.module.serviceduration;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +14,8 @@ public interface ServiceDurationRepository extends JpaRepository<ServiceDuration
 
     Optional<ServiceDuration> findByIdAndTenantId(UUID id, UUID tenantId);
 
-    boolean existsByProfessionalIdAndServiceId(UUID professionalId, UUID serviceId);
+    @Query("SELECT COUNT(sd) > 0 FROM ServiceDuration sd WHERE sd.professional.id = :professionalId AND sd.service.id = :serviceId")
+    boolean existsByProfessionalIdAndServiceId(@Param("professionalId") UUID professionalId, @Param("serviceId") UUID serviceId);
 
     Optional<ServiceDuration> findByProfessionalIdAndServiceIdAndTenantId(
             UUID professionalId, UUID serviceId, UUID tenantId
