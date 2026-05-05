@@ -16,7 +16,7 @@ public interface BlockedSlotsRepository extends JpaRepository<BlockedSlots, UUID
     List<BlockedSlots> findAllByProfessionalIdAndTenantId(UUID professionalId, UUID tenantId);
 
     @Query("""
-            SELECT b FROM BlockedSlot b
+            SELECT b FROM BlockedSlots b
             WHERE b.professional.id = :professionalId
             AND b.tenantId = :tenantId
             AND b.startAt < :end
