@@ -19,7 +19,7 @@ public class BaseEntity {
     private UUID id;
 
     @Column(name = "tenant_id", nullable = false, updatable = false)
-    private UUID tenant_id;
+    private UUID tenantId;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -31,7 +31,7 @@ public class BaseEntity {
 
     @PrePersist
     private void prePersist(){
-        this.tenant_id = TenantContext.getCurrentTenant();
+        this.tenantId = TenantContext.getCurrentTenant();
     }
 
 }
