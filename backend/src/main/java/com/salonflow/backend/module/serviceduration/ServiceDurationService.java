@@ -28,7 +28,7 @@ public class ServiceDurationService {
 
         UUID tenantId = TenantContext.getCurrentTenant();
 
-        if (serviceDurationRepository.existsByProfessionalAndServiceId(
+        if (serviceDurationRepository.existsByProfessionalIdAndServiceId(
                 request.professionalId(), request.serviceId())) {
                     throw new BusinessException(
                             "This professional already have a duration registered for this service",

@@ -12,7 +12,7 @@ public interface ServiceDurationRepository extends JpaRepository<ServiceDuration
 
     Optional<ServiceDuration> findByIdAndTenantId(UUID id, UUID tenantId);
 
-    boolean existsByProfessionalAndServiceId(UUID professionalId, UUID serviceId);
+    boolean existsByProfessionalIdAndServiceId(UUID professionalId, UUID serviceId);
 
     Optional<ServiceDuration> findByProfessionalIdAndServiceIdAndTenantId(
             UUID professionalId, UUID serviceId, UUID tenantId
