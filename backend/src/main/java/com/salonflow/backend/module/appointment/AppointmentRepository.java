@@ -14,14 +14,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     Optional<Appointment> findByIdAndTenantId(UUID id, UUID tenantId);
     List<Appointment> findAllByTenantIdOrderByScheduledAtDesc(UUID tenantId);
 
-    List<Appointment> findAllByProfessionalIdAndTenantIdOrderByScheduleAtAsc(
+    List<Appointment> findAllByProfessionalIdAndTenantIdOrderByScheduledAtAsc(
             UUID professionalId, UUID tenantId
     );
 
     @Query(value = """
             SELECT * FROM appointments
             WHERE professional_id = :professionalId
-            AND tenant_id = :tenantId
+            AND tenantId = :tenantId
             AND status = 'CONFIRMED'
             AND scheduled_at < :end
             AND scheduled_at + (duration_minutes * INTERVAL '1 minute') > :start
