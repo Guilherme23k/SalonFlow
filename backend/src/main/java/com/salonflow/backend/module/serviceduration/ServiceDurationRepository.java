@@ -16,7 +16,8 @@ public interface ServiceDurationRepository extends JpaRepository<ServiceDuration
 
     Optional<ServiceDuration> findByIdAndTenantId(UUID id, UUID tenantId);
 
-    boolean existsByProfessionalAndService(Professional professional, Service service);
+    @Query(value = "SELECT COUNT(*) > 0 FROM service_duration WHERE professional_id = :pId AND service_id = :sId", nativeQuery = true)
+    boolean existsByProfessionalIdAndServiceIdNative(@Param("pId") UUID pId, @Param("sId") UUID sId);
 
     Optional<ServiceDuration> findByProfessionalIdAndServiceIdAndTenantId(
             UUID professionalId, UUID serviceId, UUID tenantId
