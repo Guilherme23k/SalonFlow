@@ -21,7 +21,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
     @Query(value = """
             SELECT * FROM appointments
             WHERE professional_id = :professionalId
-            AND tenantId = :tenantId
+            AND tenant_Id = :tenantId
             AND status = 'CONFIRMED'
             AND scheduled_at < :end
             AND scheduled_at + (duration_minutes * INTERVAL '1 minute') > :start
