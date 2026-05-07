@@ -28,7 +28,7 @@ public class ServiceDurationService {
 
         UUID tenantId = TenantContext.getCurrentTenant();
 
-        if (serviceDurationRepository.existsByProfessionalIdAndServiceIdNative(
+        if (serviceDurationRepository.existsByProfessionalIdAndServiceId(
                 request.professionalId(), request.serviceId()
         )){
             throw new BusinessException(
