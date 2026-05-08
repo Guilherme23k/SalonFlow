@@ -40,6 +40,23 @@ services:
       - salonflow-network
     # Não expõe porta para fora — só acessível internamente
 
+bff:
+  build:
+    context: ./bff
+    dockerfile: Dockerfile
+  container_name: salonflow-bff
+  restart: unless-stopped
+  environment:
+    BACKEND_URL: http://backend:8080
+    INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+    PORT: 3000
+  ports:
+    - "3000:3000"
+  depends_on:
+    - backend
+  networks:
+    - salonflow-network
+
 volumes:
   salonflow-db:
 
