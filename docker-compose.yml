@@ -7,8 +7,6 @@ services:
       POSTGRES_DB: salonflow
       POSTGRES_USER: salonflow
       POSTGRES_PASSWORD: salonflow
-    ports:
-      - "5432:5432"
     volumes:
       - salonflow-db:/var/lib/postgresql/data
     healthcheck:
@@ -25,8 +23,6 @@ services:
       dockerfile: Dockerfile
     container_name: salonflow-backend
     restart: unless-stopped
-    ports:
-      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/salonflow
       SPRING_DATASOURCE_USERNAME: salonflow
@@ -39,6 +35,23 @@ services:
     networks:
       - salonflow-network
     # Não expõe porta para fora — só acessível internamente
+
+bff:
+  build:
+    context: ./bff
+    dockerfile: Dockerfile
+  container_name: salonflow-bff
+  restart: unless-stopped
+  environment:
+    BACKEND_URL: http://backend:8080
+    INTERNAL_API_KEY: ${INTERNAL_API_KEY}
+    PORT: 3000
+  ports:
+    - "3000:3000"
+  depends_on:
+    - backend
+  networks:
+    - salonflow-network
 
 volumes:
   salonflow-db:
