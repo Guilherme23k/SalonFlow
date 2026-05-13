@@ -11,6 +11,7 @@ import com.salonflow.backend.module.professional.ProfessionalRepository;
 import com.salonflow.backend.module.service.ServiceRepository;
 import com.salonflow.backend.module.serviceduration.ServiceDuration;
 import com.salonflow.backend.module.serviceduration.ServiceDurationRepository;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -181,6 +182,18 @@ public class AppointmentService {
 
         appointment.setStatus(AppointmentStatus.CANCELED);
         return AppointmentResponse.from(appointmentRepository.save(appointment));
+    }
+
+    @Transactional(readOnly = true)
+    public ServiceDurationResponse findByIdAndService (UUID professionalId, UUID serviceId){
+
+        return serviceDurationRepository.findByProfessionalIdAndServiceIdAndTenantId(
+                professionalId, serviceId, TenantContext.getCurrentTenant())
+                .map(ServiceDurationResponse::from)
+                .orElseThrow(() -> new BusinessException(
+                        "This professional does not do the service request",
+                        HttpStatus.NOT_FOUND
+                ));
     }
 }
 
