@@ -29,7 +29,6 @@ public interface BlockedSlotsRepository extends JpaRepository<BlockedSlots, UUID
             @Param("end") LocalDateTime end
     );
 
-    // Adicionar em BlockedSlotRepository.java
     @Query("""
         SELECT b FROM BlockedSlots b
         WHERE b.professional.id = :professionalId

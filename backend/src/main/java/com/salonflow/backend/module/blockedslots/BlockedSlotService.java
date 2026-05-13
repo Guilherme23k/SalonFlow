@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -63,6 +65,22 @@ public class BlockedSlotService {
 
         return BlockedSlotResponse.from(blockedSlotsRepository.save(blockedSlots));
 
+    }
+
+    @Transactional(readOnly = true)
+    public List<BlockedSlotResponse> findByProfessionalAndDate(
+            UUID professionalId, LocalDate date) {
+
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(23, 59, 59);
+
+        return blockedSlotsRepository
+                .findByProfessionalAndDate(
+                        professionalId, TenantContext.getCurrentTenant(),
+                        startOfDay, endOfDay)
+                .stream()
+                .map(BlockedSlotResponse::from)
+                .toList();
     }
 
     @Transactional(readOnly = true)
