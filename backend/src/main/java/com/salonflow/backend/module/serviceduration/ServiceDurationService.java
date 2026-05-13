@@ -72,6 +72,20 @@ public class ServiceDurationService {
     }
 
     @Transactional(readOnly = true)
+    public ServiceDurationResponse findByProfessionalAndService(
+            UUID professionalId, UUID serviceId) {
+
+        return serviceDurationRepository
+                .findByProfessionalIdAndServiceIdAndTenantId(
+                        professionalId, serviceId, TenantContext.getCurrentTenant())
+                .map(ServiceDurationResponse::from)
+                .orElseThrow(() -> new BusinessException(
+                        "Este profissional não realiza o serviço solicitado",
+                        HttpStatus.NOT_FOUND
+                ));
+    }
+
+    @Transactional(readOnly = true)
     public ServiceDurationResponse update (UUID id, ServiceDurationRequest request){
 
         ServiceDuration sd = serviceDurationRepository
