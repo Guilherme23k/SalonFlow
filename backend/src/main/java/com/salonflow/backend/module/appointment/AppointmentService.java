@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -194,6 +195,18 @@ public class AppointmentService {
                         "This professional does not do the service request",
                         HttpStatus.NOT_FOUND
                 ));
+    }
+
+    @Transactional(readOnly = true)
+    public List<AppointmentResponse> findByProfessionalAndDate(
+            UUID professionalId,
+            LocalDate date
+    ){
+        return appointmentRepository.findByProfessionalAndDate(
+                professionalId, TenantContext.getCurrentTenant(), date
+        ).stream()
+                .map(AppointmentResponse::from)
+                .toList();
     }
 }
 
