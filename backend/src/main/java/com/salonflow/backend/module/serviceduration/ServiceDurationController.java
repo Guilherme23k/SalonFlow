@@ -36,6 +36,16 @@ public class ServiceDurationController {
         return ResponseEntity.ok(service.findByProfessionalId(professionalId));
     }
 
+    @GetMapping("/professional/{professionalId}/service/{serviceId}")
+    public ResponseEntity<ServiceDurationResponse> findByIdAndService(
+            @PathVariable UUID professionalId,
+            @PathVariable UUID serviceId
+    ){
+        return ResponseEntity.ok(
+            service.findByProfessionalAndService(professionalId,serviceId)
+        );
+    }
+
     @PatchMapping("/{id}")
     public ResponseEntity<ServiceDurationResponse> update(
 
