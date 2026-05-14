@@ -25,11 +25,6 @@ public class BlockedSlotController {
                 .body(blockedSlotService.create(request));
     }
 
-    @GetMapping("/professional/{professionalId}")
-    public ResponseEntity<List<BlockedSlotResponse>> findByProfessional(
-            @PathVariable UUID professionalId) {
-        return ResponseEntity.ok(blockedSlotService.findByProfessionalId(professionalId));
-    }
 
     @GetMapping("/professional/{professionalId}")
     public ResponseEntity<List<BlockedSlotResponse>> findByProfessional(

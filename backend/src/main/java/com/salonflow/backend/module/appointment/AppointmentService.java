@@ -185,17 +185,6 @@ public class AppointmentService {
         return AppointmentResponse.from(appointmentRepository.save(appointment));
     }
 
-    @Transactional(readOnly = true)
-    public ServiceDurationResponse findByIdAndService (UUID professionalId, UUID serviceId){
-
-        return serviceDurationRepository.findByProfessionalIdAndServiceIdAndTenantId(
-                professionalId, serviceId, TenantContext.getCurrentTenant())
-                .map(ServiceDurationResponse::from)
-                .orElseThrow(() -> new BusinessException(
-                        "This professional does not do the service request",
-                        HttpStatus.NOT_FOUND
-                ));
-    }
 
     @Transactional(readOnly = true)
     public List<AppointmentResponse> findByProfessionalAndDate(

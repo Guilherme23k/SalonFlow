@@ -35,12 +35,6 @@ public class AppointmentController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/professional/{professionalId}")
-    public ResponseEntity<List<AppointmentResponse>> findByProfessional(
-            @PathVariable UUID professionalId){
-        return ResponseEntity.ok(service.findByProfessional(professionalId));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentResponse> findById (@PathVariable UUID id){
         return ResponseEntity.ok(service.findById(id));
@@ -49,7 +43,7 @@ public class AppointmentController {
     @GetMapping("/professional/{professionalId}")
     public ResponseEntity<List<AppointmentResponse>> findByProfessionalAndDate(
             @PathVariable UUID professionalId,
-            @RequestParam(required = false)LocalDate date
+            @RequestParam(required = false) LocalDate date
             ){
         if (date!=null){
             return ResponseEntity.ok(
