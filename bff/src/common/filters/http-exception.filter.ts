@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+// src/common/filters/http-exception.filter.ts
 import {
   ExceptionFilter,
   Catch,
@@ -21,12 +24,17 @@ export class HttpExceptionFilter implements ExceptionFilter {
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const message =
-      exception instanceof HttpException
-        ? exception.message
-        : 'Erro interno do servidor';
+    // Extrai a mensagem real — incluindo erros de validação
+    let message: string | object = 'Erro interno do servidor';
+    if (exception instanceof HttpException) {
+      const exceptionResponse = exception.getResponse();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      message =
+        typeof exceptionResponse === 'string'
+          ? exceptionResponse
+          : ((exceptionResponse as any).message ?? exception.message);
+    }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
     if (status === HttpStatus.INTERNAL_SERVER_ERROR) {
       this.logger.error(
         'Erro inesperado',
