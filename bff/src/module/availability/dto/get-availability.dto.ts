@@ -10,6 +10,6 @@ export class GetAvailabilityDTO {
   serviceId!: string;
 
   @IsNotEmpty({ message: 'date is required' })
-  @Matches(/^\d{2}-\d{2}-\d{4}$/, { message: 'date must be on DD-MM-YYYY' })
+  @Matches(/^\d{4}-\d{2}-\d{2}$/, { message: 'date must be on YYYY-MM-DD' })
   date!: string;
 }
