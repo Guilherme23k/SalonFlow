@@ -1,6 +1,7 @@
 // src/module/availability/availability.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { SpringClientService } from '../../infra/http/spring-client.service';
+import { AvailableSlot } from './interfaces/available-slot';
 import {
   TenantResponse,
   ServiceDurationResponse,
@@ -8,7 +9,6 @@ import {
   BlockedSlotResponse,
 } from './interfaces/spring-responses.interface';
 import { GetAvailabilityDTO } from './dto/get-availability.dto';
-import { AvailableSlot } from './interfaces/available-slot';
 
 const BUFFER_MINUTES = 5;
 const SLOT_INTERVAL_MINUTES = 30;
@@ -47,11 +47,11 @@ export class AvailabilityService {
       );
     }
 
-    const slots = this.generateSlots(
-      dto.date,
-      tenant.openingTime,
-      tenant.closingTime,
-    );
+    // Normaliza openingTime e closingTime — remove segundos se vier "09:00:00"
+    const openingTime = tenant.openingTime.substring(0, 5); // "09:00"
+    const closingTime = tenant.closingTime.substring(0, 5); // "19:00"
+
+    const slots = this.generateSlots(openingTime, closingTime);
 
     return slots.map((slotTime) => ({
       time: slotTime,
@@ -59,25 +59,17 @@ export class AvailabilityService {
         slotTime,
         dto.date,
         serviceDuration.durationMinutes,
-        appointments,
-        blockedSlots,
-        tenant.closingTime,
+        appointments ?? [],
+        blockedSlots ?? [],
+        closingTime,
       ),
     }));
   }
 
-  private generateSlots(
-    date: string,
-    openingTime: string,
-    closingTime: string,
-  ): string[] {
+  private generateSlots(openingTime: string, closingTime: string): string[] {
     const slots: string[] = [];
-
-    const [openHour, openMin] = openingTime.split(':').map(Number);
-    const [closeHour, closeMin] = closingTime.split(':').map(Number);
-
-    const openingMinutes = openHour * 60 + openMin;
-    const closingMinutes = closeHour * 60 + closeMin;
+    const openingMinutes = this.timeToMinutes(openingTime);
+    const closingMinutes = this.timeToMinutes(closingTime);
 
     for (
       let minutes = openingMinutes;
@@ -102,35 +94,53 @@ export class AvailabilityService {
     blockedSlots: BlockedSlotResponse[],
     closingTime: string,
   ): boolean {
-    const slotStart = new Date(`${date}T${slotTime}:00`);
-    const slotEnd = new Date(
-      slotStart.getTime() + (durationMinutes + BUFFER_MINUTES) * 60 * 1000,
-    );
+    const slotStartMinutes = this.timeToMinutes(slotTime);
+    const slotEndMinutes = slotStartMinutes + durationMinutes + BUFFER_MINUTES;
 
-    const [closeHour, closeMin] = closingTime.split(':').map(Number);
-    const closing = new Date(`${date}T${closingTime}:00`);
-    closing.setHours(closeHour, closeMin, 0, 0);
+    // Slot ultrapassa o horário de fechamento
+    const closingMinutes = this.timeToMinutes(closingTime);
+    if (slotEndMinutes > closingMinutes) return false;
 
-    if (slotEnd > closing) return false;
-
+    // Conflito com agendamentos existentes
     for (const appointment of appointments) {
-      const apptStart = new Date(appointment.scheduleAt);
-      const apptEnd = new Date(
-        apptStart.getTime() +
-          (appointment.durationMinutes + BUFFER_MINUTES) * 60 * 1000,
-      );
+      const apptTime = appointment.scheduledAt.substring(11, 16); // "09:00"
+      const apptStartMinutes = this.timeToMinutes(apptTime);
+      const apptEndMinutes =
+        apptStartMinutes + appointment.durationMinutes + BUFFER_MINUTES;
 
-      if (slotStart < apptEnd && slotEnd > apptStart) return false;
+      if (
+        slotStartMinutes < apptEndMinutes &&
+        slotEndMinutes > apptStartMinutes
+      ) {
+        return false;
+      }
     }
 
-    // Conflito com blocked slot
+    // Conflito com blocked slots
     for (const blocked of blockedSlots) {
-      const blockedStart = new Date(blocked.startAt);
-      const blockedEnd = new Date(blocked.endAt);
+      const blockedDate = blocked.startAt.substring(0, 10);
+      if (blockedDate !== date) continue;
 
-      if (slotStart < blockedEnd && slotEnd > blockedStart) return false;
+      const blockedStartMinutes = this.timeToMinutes(
+        blocked.startAt.substring(11, 16),
+      );
+      const blockedEndMinutes = this.timeToMinutes(
+        blocked.endAt.substring(11, 16),
+      );
+
+      if (
+        slotStartMinutes < blockedEndMinutes &&
+        slotEndMinutes > blockedStartMinutes
+      ) {
+        return false;
+      }
     }
 
     return true;
+  }
+
+  private timeToMinutes(time: string): number {
+    const [hour, min] = time.split(':').map(Number);
+    return hour * 60 + min;
   }
 }
