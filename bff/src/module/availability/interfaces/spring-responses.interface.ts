@@ -11,7 +11,7 @@ export interface ServiceDurationResponse {
 
 export interface AppointmentResponse {
   id: string;
-  scheduleAt: string;
+  scheduledAt: string;
   durationMinutes: number;
   status: string;
 }
