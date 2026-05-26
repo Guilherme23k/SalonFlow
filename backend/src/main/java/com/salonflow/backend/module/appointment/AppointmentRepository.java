@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -32,5 +33,18 @@ public interface AppointmentRepository extends JpaRepository<Appointment, UUID> 
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );
+
+    @Query("""
+        SELECT a FROM Appointment a
+        WHERE a.professional.id = :professionalId
+        AND a.tenantId = :tenantId
+        AND a.status = 'CONFIRMED'
+        AND CAST(a.scheduledAt AS date) = CAST(:date AS date)
+        """)
+    List<Appointment> findByProfessionalAndDate(
+            @Param("professionalId") UUID professionalId,
+            @Param("tenantId") UUID tenantId,
+            @Param("date")LocalDate date
+            );
 
 }

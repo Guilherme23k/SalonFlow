@@ -29,4 +29,18 @@ public interface BlockedSlotsRepository extends JpaRepository<BlockedSlots, UUID
             @Param("end") LocalDateTime end
     );
 
+    @Query("""
+        SELECT b FROM BlockedSlots b
+        WHERE b.professional.id = :professionalId
+        AND b.tenantId = :tenantId
+        AND b.startAt < :endOfDay
+        AND b.endAt > :startOfDay
+        """)
+    List<BlockedSlots> findByProfessionalAndDate(
+            @Param("professionalId") UUID professionalId,
+            @Param("tenantId") UUID tenantId,
+            @Param("startOfDay") LocalDateTime startOfDay,
+            @Param("endOfDay") LocalDateTime endOfDay
+    );
+
 }

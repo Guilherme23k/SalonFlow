@@ -11,11 +11,13 @@ import com.salonflow.backend.module.professional.ProfessionalRepository;
 import com.salonflow.backend.module.service.ServiceRepository;
 import com.salonflow.backend.module.serviceduration.ServiceDuration;
 import com.salonflow.backend.module.serviceduration.ServiceDurationRepository;
+import com.salonflow.backend.module.serviceduration.dto.ServiceDurationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -181,6 +183,19 @@ public class AppointmentService {
 
         appointment.setStatus(AppointmentStatus.CANCELED);
         return AppointmentResponse.from(appointmentRepository.save(appointment));
+    }
+
+
+    @Transactional(readOnly = true)
+    public List<AppointmentResponse> findByProfessionalAndDate(
+            UUID professionalId,
+            LocalDate date
+    ){
+        return appointmentRepository.findByProfessionalAndDate(
+                professionalId, TenantContext.getCurrentTenant(), date
+        ).stream()
+                .map(AppointmentResponse::from)
+                .toList();
     }
 }
 

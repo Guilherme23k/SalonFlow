@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,15 +35,23 @@ public class AppointmentController {
         return ResponseEntity.ok(service.findAll());
     }
 
-    @GetMapping("/professional/{professionalId}")
-    public ResponseEntity<List<AppointmentResponse>> findByProfessional(
-            @PathVariable UUID professionalId){
-        return ResponseEntity.ok(service.findByProfessional(professionalId));
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<AppointmentResponse> findById (@PathVariable UUID id){
         return ResponseEntity.ok(service.findById(id));
+    }
+
+    @GetMapping("/professional/{professionalId}")
+    public ResponseEntity<List<AppointmentResponse>> findByProfessionalAndDate(
+            @PathVariable UUID professionalId,
+            @RequestParam(required = false) LocalDate date
+            ){
+        if (date!=null){
+            return ResponseEntity.ok(
+                    service.findByProfessionalAndDate(professionalId, date)
+            );
+        }
+
+        return ResponseEntity.ok(service.findByProfessional(professionalId));
     }
 
     @PatchMapping("/{id}/cancel")
