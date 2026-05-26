@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SpringClientModule } from './infra/http/spring-client.module';
 import { AvailabilityModule } from './module/availability/availability.module';
+import { AppointmentModule } from './module/appointment/appointment.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { AvailabilityModule } from './module/availability/availability.module';
     }),
     SpringClientModule,
     AvailabilityModule,
+    AppointmentModule,
   ],
 })
 export class AppModule {}
