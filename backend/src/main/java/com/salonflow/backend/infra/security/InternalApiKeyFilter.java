@@ -25,6 +25,7 @@ public class InternalApiKeyFilter extends OncePerRequestFilter {
             "/v3/api-docs",
             "/swagger-ui",
             "/swagger-ui.html",
+            "/api-docs",
             "/api-docs/swagger-config"
     );
 
