@@ -24,7 +24,8 @@ public class InternalApiKeyFilter extends OncePerRequestFilter {
     private static List<String> EXCLUED_URLS = List.of(
             "/v3/api-docs",
             "/swagger-ui",
-            "/swagger-ui.html"
+            "/swagger-ui.html",
+            "/api-docs/swagger-config"
     );
 
     @Override
