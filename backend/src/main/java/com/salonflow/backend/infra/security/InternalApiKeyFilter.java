@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -19,6 +20,18 @@ public class InternalApiKeyFilter extends OncePerRequestFilter {
 
     @Value("${internal.api.key}")
     private String validApiKey;
+
+    private static List<String> EXCLUED_URLS = List.of(
+            "/v3/api-docs",
+            "/swagger-ui",
+            "/swagger-ui.html"
+    );
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        return EXCLUED_URLS.stream().anyMatch(path::startsWith);
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
