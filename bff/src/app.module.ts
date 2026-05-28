@@ -4,6 +4,8 @@ import { SpringClientModule } from './infra/http/spring-client.module';
 import { AvailabilityModule } from './module/availability/availability.module';
 import { AppointmentModule } from './module/appointment/appointment.module';
 import { TenantModule } from './module/tenant/tenant.module';
+import { ProfessionalModule } from './module/professional/professional.module';
+import { ServiceModule } from './module/service/service.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { TenantModule } from './module/tenant/tenant.module';
     AvailabilityModule,
     AppointmentModule,
     TenantModule,
+    ProfessionalModule,
+    ServiceModule,
   ],
 })
 export class AppModule {}
