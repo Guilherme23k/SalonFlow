@@ -10,6 +10,10 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
+  app.enableCors({
+    origin: '*', //restringir depois para o dominio do frontend
+  });
+
   const config = new DocumentBuilder()
     .setTitle('SalonFlow BFF')
     .setDescription('API pública do SalonFlow - NestJS')

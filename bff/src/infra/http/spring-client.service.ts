@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
@@ -11,7 +9,7 @@ export class SpringClientService {
 
   async get<T>(
     path: string,
-    tenantId: string,
+    tenantId?: string,
     config?: AxiosRequestConfig,
   ): Promise<T> {
     const response = await firstValueFrom<AxiosResponse<T>>(
@@ -19,18 +17,19 @@ export class SpringClientService {
         ...config,
         headers: {
           ...config?.headers,
-          'X-Tenant-Id': tenantId,
+          ...(tenantId && tenantId !== 'public'
+            ? { 'X-Tenant-Id': tenantId }
+            : {}),
         },
       }),
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access
     return response.data;
   }
 
   async post<T>(
     path: string,
-    tenantId: string,
-    body: unknown,
+    tenantId?: string,
+    body?: unknown,
     config?: AxiosRequestConfig,
   ): Promise<T> {
     const response = await firstValueFrom<AxiosResponse<T>>(
@@ -38,18 +37,19 @@ export class SpringClientService {
         ...config,
         headers: {
           ...config?.headers,
-          'X-Tenant-Id': tenantId,
+          ...(tenantId && tenantId !== 'public'
+            ? { 'X-Tenant-Id': tenantId }
+            : {}),
         },
       }),
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return response.data;
   }
 
   async patch<T>(
     path: string,
-    tenantId: string,
-    body: unknown,
+    tenantId?: string,
+    body?: unknown,
     config?: AxiosRequestConfig,
   ): Promise<T> {
     const response = await firstValueFrom<AxiosResponse<T>>(
@@ -57,17 +57,18 @@ export class SpringClientService {
         ...config,
         headers: {
           ...config?.headers,
-          'X-Tenant-Id': tenantId,
+          ...(tenantId && tenantId !== 'public'
+            ? { 'X-Tenant-Id': tenantId }
+            : {}),
         },
       }),
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return response.data;
   }
 
   async delete<T>(
     path: string,
-    tenantId: string,
+    tenantId?: string,
     config?: AxiosRequestConfig,
   ): Promise<T> {
     const response = await firstValueFrom<AxiosResponse<T>>(
@@ -75,11 +76,12 @@ export class SpringClientService {
         ...config,
         headers: {
           ...config?.headers,
-          'X-Tenant-Id': tenantId,
+          ...(tenantId && tenantId !== 'public'
+            ? { 'X-Tenant-Id': tenantId }
+            : {}),
         },
       }),
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return response.data;
   }
 }

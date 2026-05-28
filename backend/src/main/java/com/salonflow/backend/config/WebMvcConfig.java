@@ -13,10 +13,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
     private final TenantInterceptor tenantInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry){
+    public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(tenantInterceptor)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/v1/tenants");
+                .excludePathPatterns("/api/v1/tenants")
+                .excludePathPatterns("/api/v1/tenants/slug/**");
     }
 
 }
