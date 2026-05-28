@@ -1,14 +1,9 @@
 import { Controller, Get, Headers, UseInterceptors } from '@nestjs/common';
-import { ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TenantInterceptor } from '../../common/interceptors/tenant.interceptor';
 import { ServiceService } from './service.service';
 
 @ApiTags('Services')
-@ApiHeader({
-  name: 'x-tenant-id',
-  required: true,
-  description: 'UUID do tenant',
-})
 @UseInterceptors(TenantInterceptor)
 @Controller('api/v1/services')
 export class ServiceController {
