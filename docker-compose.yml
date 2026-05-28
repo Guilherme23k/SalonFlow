@@ -53,6 +53,21 @@ services:
     networks:
       - salonflow-network
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    container_name: salonflow-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - bff
+    networks:
+      - salonflow-network
+
 volumes:
   salonflow-db:
 
