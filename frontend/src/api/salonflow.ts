@@ -27,12 +27,12 @@ export async function resolveTenant(slug:string): Promise<Tenant> {
     return data;
 }
 
-export async function getProfessional(): Promise<Professional[]> {
+export async function getProfessionals(): Promise<Professional[]> {
     const { data } = await api.get<Professional[]>('api/v1/professionals');
     return data;
 }
 
-export async function getService(): Promise<Service[]> {
+export async function getServices(): Promise<Service[]> {
     const { data } = await api.get<Service[]>('/api/v1/services');
     return data;
     
