@@ -3,9 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { SpringClientModule } from './infra/http/spring-client.module';
 import { AvailabilityModule } from './module/availability/availability.module';
 import { AppointmentModule } from './module/appointment/appointment.module';
-import { TenantModuleTsModule } from './module/tenant/tenant.module';
-import { TenantService } from './module/tenant/tenant.service';
-import { TenantController } from './module/tenant/tenant.controller';
+import { TenantModule } from './module/tenant/tenant.module';
 
 @Module({
   imports: [
@@ -15,9 +13,7 @@ import { TenantController } from './module/tenant/tenant.controller';
     SpringClientModule,
     AvailabilityModule,
     AppointmentModule,
-    TenantModuleTsModule,
+    TenantModule,
   ],
-  providers: [TenantService],
-  controllers: [TenantController],
 })
 export class AppModule {}
