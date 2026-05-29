@@ -1,14 +1,9 @@
 import { Controller, Get, Headers, UseInterceptors } from '@nestjs/common';
 import { TenantInterceptor } from '../../common/interceptors/tenant.interceptor';
-import { ApiHeader, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ProfessionalService } from './professional.service';
 
 @ApiTags('Professionals')
-@ApiHeader({
-  name: 'x-tenant-id',
-  required: true,
-  description: 'UUID do tenant',
-})
 @UseInterceptors(TenantInterceptor)
 @Controller('api/v1/professionals')
 export class ProfessionalController {
