@@ -14,4 +14,16 @@ export class ServiceController {
   async findAll(@Headers('x-tenant-id') tenantId: string) {
     return this.salonService.findAll(tenantId);
   }
+
+  @Get()
+  @ApiOperation({ summary: 'List all active services of a professional' })
+  async findAllServicesByProfessional(
+    @Headers('x-tenant-id') tenantId: string,
+    professionalid: string,
+  ) {
+    return this.salonService.findAllServicesByProfessional(
+      tenantId,
+      professionalid,
+    );
+  }
 }
