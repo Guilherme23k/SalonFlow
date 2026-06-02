@@ -1,9 +1,9 @@
-import type { Service } from "../types";
+import type { ServiceDuration } from "../types";
 
 interface Props{
-    service: Service;
+    service: ServiceDuration;
     selected: boolean;
-    onSelect: (service: Service) => void;
+    onSelect: (service: ServiceDuration) => void;
 }
 
 export default function ServiceCard({ service, selected, onSelect }: Props) {
@@ -18,10 +18,11 @@ export default function ServiceCard({ service, selected, onSelect }: Props) {
         }`}
         >
 
-        <p className="font-medium">{service.name}</p>
-        {service.description && (
-        <p className="text-sm text-zinc-500 mt-0.5">{service.description}</p>
+        <p className="font-medium">{service.serviceName}</p>
+        {service.serviceDescription && (
+        <p className="text-sm text-zinc-500 mt-0.5">{service.serviceDescription}</p>
         )}
+        <p className="text-sm text-zinc-500 mt-0.5">{service.price}</p>
 
         </button>
     )
