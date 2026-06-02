@@ -12,6 +12,7 @@ public record ServiceDurationResponse(
         String professionalName,
         UUID serviceId,
         String serviceName,
+        String serviceDescription,
         Integer durationMinutes,
         BigDecimal price
 
@@ -24,6 +25,7 @@ public record ServiceDurationResponse(
                   sd.getProfessional().getName(),
                   sd.getService().getId(),
                   sd.getService().getName(),
+                  sd.getService().getDescription(),
                   sd.getDurationMinutes(),
                   sd.getPrice()
             );
