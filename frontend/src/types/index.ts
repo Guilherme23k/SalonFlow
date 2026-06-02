@@ -28,6 +28,7 @@ export interface ServiceDuration {
   professionalName: string;
   serviceId: string;
   serviceName: string;
+  serviceDescription: string;
   durationMinutes: string;
   price: number;
 }
