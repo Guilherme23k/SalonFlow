@@ -38,6 +38,11 @@ export async function getServices(): Promise<Service[]> {
     
 }
 
+export async function getServicesByProfessionalId(professionalId: string): Promise<Service[]>{
+    const { data } = await api.get<Service[]>(`/api/v1/service-durations/${professionalId}`);
+    return data;
+}
+
 export async function getAvailability(professionalId: string,
     serviceId:string,
     date: string,
