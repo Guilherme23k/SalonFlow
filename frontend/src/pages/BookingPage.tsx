@@ -4,16 +4,16 @@ import { useParams } from 'react-router-dom';
 import {
   resolveTenant,
   getProfessionals,
-  getServices,
   getAvailability,
   createAppointment,
+  getServicesByProfessionalId,
 } from '../api/salonflow';
 import type {
   Tenant,
   Professional,
-  Service,
   AvailableSlot,
   AppointmentResponse,
+  ServiceDuration,
 } from '../types';
 import ProfessionalCard from '../components/ProfessionalCard';
 import ServiceCard from '../components/ServiceCard';
@@ -33,12 +33,12 @@ export default function BookingPage() {
 
   // Dados
   const [professionals, setProfessionals] = useState<Professional[]>([]);
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<ServiceDuration[]>([]);
   const [slots, setSlots] = useState<AvailableSlot[]>([]);
 
   // Seleções
   const [selectedProfessional, setSelectedProfessional] = useState<Professional | null>(null);
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedService, setSelectedService] = useState<ServiceDuration | null>(null);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
   const [customerName, setCustomerName] = useState('');
@@ -66,10 +66,12 @@ export default function BookingPage() {
   useEffect(() => {
   if (!selectedProfessional) return;
 
+  const professionalId = selectedProfessional.id;
+
   async function fetchServices() {
     setLoading(true);
     try {
-      const data = await getServices();
+      const data = await getServicesByProfessionalId(professionalId);
       setServices(data);
     } finally {
       setLoading(false);
@@ -110,7 +112,7 @@ export default function BookingPage() {
     setStep('service');
   }
 
-  function handleSelectService(service: Service) {
+  function handleSelectService(service: ServiceDuration) {
     setSelectedService(service);
     setSelectedDate('');
     setSelectedSlot(null);
@@ -247,7 +249,7 @@ export default function BookingPage() {
               <Chip label={selectedProfessional.name} onClick={() => setStep('professional')} />
             )}
             {selectedService && (
-              <Chip label={selectedService.name} onClick={() => setStep('service')} />
+              <Chip label={selectedService.serviceName} onClick={() => setStep('service')} />
             )}
             {selectedDate && (
               <Chip label={formatDate(selectedDate)} onClick={() => setStep('date')} />
