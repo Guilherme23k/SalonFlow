@@ -40,7 +40,7 @@ export async function getServices(): Promise<Service[]> {
 }
 
 export async function getServicesByProfessionalId(professionalId: string): Promise<ServiceDuration[]>{
-    const { data } = await api.get<ServiceDuration[]>(`/api/v1/service-durations/${professionalId}/services`);
+    const { data } = await api.get<ServiceDuration[]>(`/api/v1/service-durations/professional/${professionalId}/services`);
     return data;
 }
 
