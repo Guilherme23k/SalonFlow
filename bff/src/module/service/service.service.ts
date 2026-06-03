@@ -8,14 +8,4 @@ export class ServiceService {
   async findAll(tenantId: string) {
     return this.springClient.get('/api/v1/services', tenantId);
   }
-
-  async findAllServicesByProfessional(
-    tenantId: string,
-    professionalId: string,
-  ) {
-    return this.springClient.get(
-      `/api/v1/service-durations/${professionalId}`,
-      tenantId,
-    );
-  }
 }
