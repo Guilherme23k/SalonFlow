@@ -16,23 +16,76 @@ CREATE INDEX IF NOT EXISTS idx_appointments_prof       ON appointments     (prof
 CREATE INDEX IF NOT EXISTS idx_appointments_customer   ON appointments     (customer_id);
 CREATE INDEX IF NOT EXISTS idx_appointments_scheduled  ON appointments     (professional_id, scheduled_at);
 
--- Constraints de unicidade e integridade
-ALTER TABLE customers
-    ADD CONSTRAINT IF NOT EXISTS uq_customer_tenant_phone
-    UNIQUE (tenant_id, phone);
+-- Constraints de unicidade
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'uq_customer_tenant_phone'
+    ) THEN
+ALTER TABLE customers ADD CONSTRAINT uq_customer_tenant_phone UNIQUE (tenant_id, phone);
+END IF;
+END $$;
 
-ALTER TABLE service_duration
-    ADD CONSTRAINT IF NOT EXISTS uq_service_duration
-    UNIQUE (professional_id, service_id);
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'uq_service_duration'
+    ) THEN
+ALTER TABLE service_duration ADD CONSTRAINT uq_service_duration UNIQUE (professional_id, service_id);
+END IF;
+END $$;
 
-ALTER TABLE blocked_slots
-    ADD CONSTRAINT IF NOT EXISTS chk_blocked_slots_period
-    CHECK (end_at > start_at);
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'chk_blocked_slots_period'
+    ) THEN
+ALTER TABLE blocked_slots ADD CONSTRAINT chk_blocked_slots_period CHECK (end_at > start_at);
+END IF;
+END $$;
 
 -- FK de tenant em todas as tabelas
-ALTER TABLE professionals   ADD CONSTRAINT IF NOT EXISTS fk_professionals_tenant   FOREIGN KEY (tenant_id) REFERENCES tenants(id);
-ALTER TABLE services        ADD CONSTRAINT IF NOT EXISTS fk_services_tenant        FOREIGN KEY (tenant_id) REFERENCES tenants(id);
-ALTER TABLE service_duration ADD CONSTRAINT IF NOT EXISTS fk_service_duration_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
-ALTER TABLE blocked_slots   ADD CONSTRAINT IF NOT EXISTS fk_blocked_slots_tenant   FOREIGN KEY (tenant_id) REFERENCES tenants(id);
-ALTER TABLE customers       ADD CONSTRAINT IF NOT EXISTS fk_customers_tenant       FOREIGN KEY (tenant_id) REFERENCES tenants(id);
-ALTER TABLE appointments    ADD CONSTRAINT IF NOT EXISTS fk_appointments_tenant    FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_professionals_tenant'
+    ) THEN
+ALTER TABLE professionals ADD CONSTRAINT fk_professionals_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_services_tenant'
+    ) THEN
+ALTER TABLE services ADD CONSTRAINT fk_services_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_service_duration_tenant'
+    ) THEN
+ALTER TABLE service_duration ADD CONSTRAINT fk_service_duration_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_blocked_slots_tenant'
+    ) THEN
+ALTER TABLE blocked_slots ADD CONSTRAINT fk_blocked_slots_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_customers_tenant'
+    ) THEN
+ALTER TABLE customers ADD CONSTRAINT fk_customers_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
+
+DO $$ BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint WHERE conname = 'fk_appointments_tenant'
+    ) THEN
+ALTER TABLE appointments ADD CONSTRAINT fk_appointments_tenant FOREIGN KEY (tenant_id) REFERENCES tenants(id);
+END IF;
+END $$;
