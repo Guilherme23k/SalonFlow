@@ -86,6 +86,15 @@ public class ServiceDurationService {
     }
 
     @Transactional(readOnly = true)
+    public List<ServiceDurationResponse> findAllServicesByProfessionalId(UUID professionalId) {
+        return serviceDurationRepository.
+                findAllServicesByProfessionalId(professionalId, TenantContext.getCurrentTenant())
+                .stream()
+                .map(ServiceDurationResponse::from)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public ServiceDurationResponse update (UUID id, ServiceDurationRequest request){
 
         ServiceDuration sd = serviceDurationRepository
@@ -115,6 +124,4 @@ public class ServiceDurationService {
         serviceDurationRepository.delete(sd);
 
     }
-
-
 }

@@ -22,6 +22,18 @@ export interface Service {
   active: boolean;
 }
 
+export interface ServiceDuration {
+  id: string;
+  professionalId: string;
+  professionalName: string;
+  serviceId: string;
+  serviceName: string;
+  serviceDescription: string;
+  durationMinutes: string;
+  price: number;
+  active: boolean;
+}
+
 export interface AvailableSlot {
   time: string;
   available: boolean;

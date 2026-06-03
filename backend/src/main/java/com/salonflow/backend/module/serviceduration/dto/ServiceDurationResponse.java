@@ -15,7 +15,9 @@ public record ServiceDurationResponse(
         ProfessionalSummary professional,
         ServiceSummary service,
         Integer durationMinutes,
-        BigDecimal price
+        BigDecimal price,
+
+        boolean active
 
 ) {
 
@@ -25,7 +27,8 @@ public record ServiceDurationResponse(
                   ProfessionalSummary.from(sd.getProfessional()),
                   ServiceSummary.from(sd.getService()),
                   sd.getDurationMinutes(),
-                  sd.getPrice()
+                  sd.getPrice(),
+                  sd.getService().getActive()
             );
         }
 

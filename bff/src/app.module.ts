@@ -6,6 +6,7 @@ import { AppointmentModule } from './module/appointment/appointment.module';
 import { TenantModule } from './module/tenant/tenant.module';
 import { ProfessionalModule } from './module/professional/professional.module';
 import { ServiceModule } from './module/service/service.module';
+import { ServiceDurationModule } from './module/service-duration/service-duration.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ServiceModule } from './module/service/service.module';
     TenantModule,
     ProfessionalModule,
     ServiceModule,
+    ServiceDurationModule,
   ],
 })
 export class AppModule {}
