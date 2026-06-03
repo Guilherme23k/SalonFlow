@@ -88,7 +88,7 @@ public class ServiceDurationService {
     @Transactional(readOnly = true)
     public List<ServiceDurationResponse> findAllServicesByProfessionalId(UUID professionalId) {
         return serviceDurationRepository.
-                findAllServicesByProfessionalId(professionalId)
+                findAllServicesByProfessionalId(professionalId, TenantContext.getCurrentTenant())
                 .stream()
                 .map(ServiceDurationResponse::from)
                 .toList();

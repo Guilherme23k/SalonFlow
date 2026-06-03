@@ -14,7 +14,9 @@ public record ServiceDurationResponse(
         String serviceName,
         String serviceDescription,
         Integer durationMinutes,
-        BigDecimal price
+        BigDecimal price,
+
+        boolean active
 
 ) {
 
@@ -27,7 +29,8 @@ public record ServiceDurationResponse(
                   sd.getService().getName(),
                   sd.getService().getDescription(),
                   sd.getDurationMinutes(),
-                  sd.getPrice()
+                  sd.getPrice(),
+                  sd.getService().getActive()
             );
         }
 

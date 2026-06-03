@@ -63,7 +63,7 @@ class ServiceDurationServiceTest {
     List<ServiceDuration> serviceDurationList = List.of(serviceDuration);
 
 
-    when(repository.findAllServicesByProfessionalId(fakeProfessionalId)).thenReturn(serviceDurationList);
+    when(repository.findAllServicesByProfessionalId(fakeProfessionalId, TenantContext.getCurrentTenant())).thenReturn(serviceDurationList);
 
     List<ServiceDurationResponse> result = service.findAllServicesByProfessionalId(fakeProfessionalId);
 

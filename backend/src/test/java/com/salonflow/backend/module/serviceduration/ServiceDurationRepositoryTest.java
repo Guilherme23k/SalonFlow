@@ -59,7 +59,7 @@ class ServiceDurationRepositoryTest {
     @DisplayName("Should return empty list when professional does not perform any service")
     void findNoneServicesByProfessionalId() {
 
-        List<ServiceDuration> result = serviceDurationRepository.findAllServicesByProfessionalId(guilherme.getId());
+        List<ServiceDuration> result = serviceDurationRepository.findAllServicesByProfessionalId(guilherme.getId(), TenantContext.getCurrentTenant());
 
         assertNotNull(result, "O retorno não deve ser null, mas uma lista vazia");
 
@@ -71,7 +71,7 @@ class ServiceDurationRepositoryTest {
     @DisplayName("Should return list whit the entiry services of a professional")
     void findAllServicesByProfessionalId(){
 
-        List<ServiceDuration> result = serviceDurationRepository.findAllServicesByProfessionalId(outroProfissional.getId());
+        List<ServiceDuration> result = serviceDurationRepository.findAllServicesByProfessionalId(outroProfissional.getId(), TenantContext.getCurrentTenant());
 
         assertNotNull(result, "O retorno não deve ser null, tem que ser uma lista com 1 entidade");
 

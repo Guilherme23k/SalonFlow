@@ -22,6 +22,6 @@ public interface ServiceDurationRepository extends JpaRepository<ServiceDuration
             UUID professionalId, UUID serviceId, UUID tenantId
     );
 
-    List<ServiceDuration> findAllServicesByProfessionalId(UUID professionalId);
+    List<ServiceDuration> findAllServicesByProfessionalId(UUID professionalId, UUID tenantId);
 
 }
