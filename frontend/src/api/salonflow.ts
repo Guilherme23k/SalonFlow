@@ -7,6 +7,7 @@ import type {
   AppointmentResponse,
   Professional,
   Service,
+  ServiceDuration,
 } from '../types';
 
 const api = axios.create({
@@ -38,8 +39,8 @@ export async function getServices(): Promise<Service[]> {
     
 }
 
-export async function getServicesByProfessionalId(professionalId: string): Promise<Service[]>{
-    const { data } = await api.get<Service[]>(`/api/v1/service-durations/${professionalId}`);
+export async function getServicesByProfessionalId(professionalId: string): Promise<ServiceDuration[]>{
+    const { data } = await api.get<ServiceDuration[]>(`/api/v1/service-durations/${professionalId}/services`);
     return data;
 }
 
