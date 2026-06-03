@@ -2,6 +2,12 @@ package com.salonflow.backend.module.appointment.dto;
 
 import com.salonflow.backend.module.appointment.Appointment;
 import com.salonflow.backend.module.appointment.AppointmentStatus;
+import com.salonflow.backend.module.customer.Customer;
+import com.salonflow.backend.module.professional.Professional;
+import com.salonflow.backend.module.service.Service;
+import com.salonflow.backend.shared.dto.CustomerSummary;
+import com.salonflow.backend.shared.dto.ProfessionalSummary;
+import com.salonflow.backend.shared.dto.ServiceSummary;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -9,13 +15,9 @@ import java.util.UUID;
 public record AppointmentResponse(
 
         UUID id,
-        UUID professionalId,
-        String professionalName,
-        UUID customerId,
-        String customerName,
-        String customerPhone,
-        UUID serviceId,
-        String serviceName,
+        ProfessionalSummary professional,
+        CustomerSummary customer,
+        ServiceSummary service,
         LocalDateTime scheduledAt,
         LocalDateTime endsAt,
         Integer durationMinutes,
@@ -28,13 +30,9 @@ public record AppointmentResponse(
     public static AppointmentResponse from(Appointment a) {
         return new AppointmentResponse(
                 a.getId(),
-                a.getProfessional().getId(),
-                a.getProfessional().getName(),
-                a.getCustomer().getId(),
-                a.getCustomer().getName(),
-                a.getCustomer().getPhone(),
-                a.getService().getId(),
-                a.getService().getName(),
+                ProfessionalSummary.from(a.getProfessional()),
+                CustomerSummary.from(a.getCustomer()),
+                ServiceSummary.from(a.getService()),
                 a.getScheduledAt(),
                 a.getScheduledAt().plusMinutes(a.getDurationMinutes()),
                 a.getDurationMinutes(),

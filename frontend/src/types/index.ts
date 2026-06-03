@@ -50,13 +50,19 @@ export interface CreateAppointmentPayload {
 
 export interface AppointmentResponse {
   id: string;
-  professionalId: string;
-  professionalName: string;
-  customerId: string;
-  customerName: string;
-  customerPhone: string;
-  serviceId: string;
-  serviceName: string;
+  professional: {
+    id: string;
+    name: string;
+  }
+  customer: {
+    id: string;
+    name: string;
+    phone: string;
+  }
+  service: {
+    id: string;
+    name: string;
+  }
   scheduledAt: string;
   endsAt: string;
   durationMinutes: number;

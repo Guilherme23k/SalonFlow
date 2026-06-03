@@ -195,8 +195,8 @@ export default function BookingPage() {
             Seu atendimento foi confirmado com sucesso.
           </p>
           <div className="bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-4 text-left flex flex-col gap-2 text-sm">
-            <Row label="Profissional" value={confirmation.professionalName} />
-            <Row label="Serviço" value={confirmation.serviceName} />
+            <Row label="Profissional" value={confirmation.professional.name} />
+            <Row label="Serviço" value={confirmation.service.name} />
             <Row label="Data" value={formatDate(confirmation.scheduledAt)} />
             <Row label="Horário" value={formatTime(confirmation.scheduledAt)} />
             <Row label="Duração" value={`${confirmation.durationMinutes} minutos`} />

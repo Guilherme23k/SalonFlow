@@ -1,6 +1,10 @@
 package com.salonflow.backend.module.serviceduration.dto;
 
+import com.salonflow.backend.module.professional.Professional;
+import com.salonflow.backend.module.service.Service;
 import com.salonflow.backend.module.serviceduration.ServiceDuration;
+import com.salonflow.backend.shared.dto.ProfessionalSummary;
+import com.salonflow.backend.shared.dto.ServiceSummary;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -8,11 +12,8 @@ import java.util.UUID;
 public record ServiceDurationResponse(
 
         UUID id,
-        UUID professionalId,
-        String professionalName,
-        UUID serviceId,
-        String serviceName,
-        String serviceDescription,
+        ProfessionalSummary professional,
+        ServiceSummary service,
         Integer durationMinutes,
         BigDecimal price,
 
@@ -23,11 +24,8 @@ public record ServiceDurationResponse(
         public static ServiceDurationResponse from(ServiceDuration sd){
             return new ServiceDurationResponse(
                   sd.getId(),
-                  sd.getProfessional().getId(),
-                  sd.getProfessional().getName(),
-                  sd.getService().getId(),
-                  sd.getService().getName(),
-                  sd.getService().getDescription(),
+                  ProfessionalSummary.from(sd.getProfessional()),
+                  ServiceSummary.from(sd.getService()),
                   sd.getDurationMinutes(),
                   sd.getPrice(),
                   sd.getService().getActive()
