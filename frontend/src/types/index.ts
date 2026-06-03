@@ -31,6 +31,7 @@ export interface ServiceDuration {
   serviceDescription: string;
   durationMinutes: string;
   price: number;
+  active: boolean;
 }
 
 export interface AvailableSlot {
