@@ -10,7 +10,7 @@ export class ServiceDurationService {
     professionalId: string,
   ) {
     return this.springClient.get(
-      `/api/v1/service-durations/${professionalId}/services`,
+      `/api/v1/service-durations/professional/${professionalId}/services`,
       tenantId,
     );
   }
