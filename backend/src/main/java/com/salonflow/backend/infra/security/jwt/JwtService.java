@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,10 +21,10 @@ public class JwtService {
     @Value("${application.security.jwt.secret-key:key}")
     private String key;
 
-    @Value("${application.security.jwt.expiration:86400000}")
+    @Value("${application.security.jwt.expiration:jwtExpedition}")
     private Long jwtExpiration;
 
-    private Key getSignInKey(){
+    private SecretKey getSignInKey(){
         return Keys.hmacShaKeyFor(key.getBytes());
     }
 
@@ -47,7 +48,12 @@ public class JwtService {
 
     public boolean isTokenValid(String token){
         try {
-            return !isTokenValid(token);
+            Jwts.parser()
+                    .verifyWith(getSignInKey())
+                    .build()
+                    .parseSignedClaims(token);
+
+            return true;
         }
         catch (Exception e){
             return false;
