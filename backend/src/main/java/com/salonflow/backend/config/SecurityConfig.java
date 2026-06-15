@@ -37,9 +37,10 @@ public class SecurityConfig {
                 .headers(header -> header.frameOptions(frameOptions -> frameOptions.disable()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/tenants/slug/**").permitAll()
+                        .requestMatchers("/api/v1/auth").permitAll()
+                        .requestMatchers("/api/v1/tenants/slug/**").permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/admin/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
