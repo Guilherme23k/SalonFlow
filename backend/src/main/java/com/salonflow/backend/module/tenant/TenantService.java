@@ -70,5 +70,10 @@ public class TenantService {
         return TenantResponse.from(repository.save(tenant));
     }
 
+    @Transactional
+    public boolean existsBySlug(String slug){
+        return repository.existsBySlug(slug);
+    }
+
 
 }
