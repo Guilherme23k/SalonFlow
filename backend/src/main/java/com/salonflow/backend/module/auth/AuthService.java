@@ -1,5 +1,6 @@
 package com.salonflow.backend.module.auth;
 
+import com.salonflow.backend.infra.exception.BusinessException;
 import com.salonflow.backend.infra.security.jwt.JwtService;
 import com.salonflow.backend.module.auth.dto.AuthResponse;
 import com.salonflow.backend.module.auth.dto.LoginRequest;
@@ -8,6 +9,7 @@ import com.salonflow.backend.module.owner.Owner;
 import com.salonflow.backend.module.owner.OwnerRepository;
 import com.salonflow.backend.module.tenant.TenantService;
 import com.salonflow.backend.module.tenant.dto.TenantResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +35,7 @@ public class AuthService {
     public void register(RegisterRequest request){
 
         if (!tenantService.existsBySlug(request.tenantSlug()) || ownerRepository.existsOwnerByTenantSlug(request.tenantSlug())){
-            throw new RuntimeException("Not found");
+            throw new BusinessException("Tenant not found or already registered", HttpStatus.BAD_REQUEST);
         }
 
         TenantResponse tenant = tenantService.findBySlug(request.tenantSlug());
