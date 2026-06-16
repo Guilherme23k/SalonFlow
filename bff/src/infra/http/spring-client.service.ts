@@ -46,6 +46,13 @@ export class SpringClientService {
     return response.data;
   }
 
+  async postAuth(path: string, body: unknown): Promise<string | void> {
+    const response = await firstValueFrom<AxiosResponse<string>>(
+      this.httpService.post<string>(path, body),
+    );
+    return response.data;
+  }
+
   async patch<T>(
     path: string,
     tenantId?: string,
